@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Tue Jun 28 2022 01:07:36.
+ * Created: Tue Jun 28 2022 01:06:09.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,25 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <array>
 #include <common/types.hpp>
+#include <string>
 
 namespace math
 {
-struct FPlane final {
-    float d;
-    vector3f_t n;
-    float point(const vector3f_t &v) const;
-};
-
-class Frustum final {
-public:
-    Frustum();
-    Frustum(const matrix4f_t &vpmatrix);
-    void set(const matrix4f_t &vpmatrix);
-    bool point(const vector3f_t &v) const;
-
-private:
-    std::array<math::FPlane, 6> planes;
-};
+hash_t crc64(const void *s, size_t n);
+hash_t crc64(const std::string &s);
 } // namespace math

@@ -1,12 +1,12 @@
 add_library(common STATIC "")
 target_include_directories(common PUBLIC "${CMAKE_SOURCE_DIR}")
-target_link_libraries(common PUBLIC EnTT glm spdlog thread_pool toml)
+target_link_libraries(common PUBLIC glm spdlog thread_pool toml)
 
 target_sources(common PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/cmdline.cpp"
-    "${CMAKE_CURRENT_LIST_DIR}/crc64.cpp")
+    "${CMAKE_CURRENT_LIST_DIR}/vfs.cpp")
 add_subdirectory(math)
-add_subdirectory(vfs)
+add_subdirectory(util)
 
 if(WIN32)
     # Windows.h conflicts with std::numeric_limits<T>
@@ -14,6 +14,6 @@ if(WIN32)
 endif()
 
 if(MSVC)
-    # Lets celebrate and make MSVC to suck some dick
+    # MSVC really doesn't like when we use sscanf. Okay, zoomer_s.
     target_compile_definitions(common PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif()

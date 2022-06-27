@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "default",
+            "includePath": [
+                //"${workspaceFolder}/external/bitsery/include",
+                //"${workspaceFolder}/external/enet/include",
+                "${workspaceFolder}/external/entt/src",
+                //"${workspaceFolder}/external/glad/include",
+                //"${workspaceFolder}/external/glfw/include",
+                "${workspaceFolder}/external/glm",
+                //"${workspaceFolder}/external/imgui",
+                "${workspaceFolder}/external/spdlog/include",
+                //"${workspaceFolder}/external/stb",
+                "${workspaceFolder}/external/thread_pool",
+                "${workspaceFolder}/external/toml",
+                "${workspaceFolder}",
+                "${default}"
+            ],
+            "defines": [
+                "GLFW_INCLUDE_NONE",
+                "NOMINMAX",
+                "VGAME_CLIENT"
+            ],
+            "cppStandard": "c++17",
+            "cStandard": "c99"
+        }
+    ],
+    "version": 4
+}
