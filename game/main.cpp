@@ -59,6 +59,10 @@ int main(int argc, char **argv)
 
     spdlog::info("main.cpp stub in action lmao");
 
+    // Ouch
+    std::ofstream ofile = vfs::openWr("test.txt", vfs::IO_APPEND);
+    vfs::writeString(ofile, "appending!");
+
 #if defined(VGAME_CLIENT)
     // run client here
 #else

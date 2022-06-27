@@ -36,7 +36,8 @@ inline bool TomlConfig<impl_type>::read(const fs_std::path &vpath)
 
     try {
         std::string source;
-        if(!vfs::readString(vfs::openRd(vpath, vfs::IO_FAV_RW), source))
+        std::ifstream ifile = vfs::openRd(vpath, vfs::IO_FAV_RW);
+        if(!vfs::readString(ifile, source))
             throw std::runtime_error("unable to read file");
         toml = toml::parse(source);
     }
@@ -57,5 +58,6 @@ inline void TomlConfig<impl_type>::write(const fs_std::path &vpath)
     static_cast<impl_type *>(this)->impl_preWrite();
     std::stringstream ss;
     ss << toml;
-    vfs::writeString(vfs::openWr(vpath, vfs::IO_FAV_RW), ss.str());
+    std::ofstream ofile = vfs::openWr(vpath, vfs::IO_FAV_RW);
+    vfs::writeString(ofile, ss.str());
 }
