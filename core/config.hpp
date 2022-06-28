@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/vfs/file.hpp>
+#include <core/vfs/file.hpp>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 #include <sstream>

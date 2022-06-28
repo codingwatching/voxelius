@@ -3,25 +3,26 @@
         {
             "name": "default",
             "includePath": [
-                //"${workspaceFolder}/external/bitsery/include",
-                //"${workspaceFolder}/external/enet/include",
-                "${workspaceFolder}/external/entt/src",
-                //"${workspaceFolder}/external/glad/include",
-                //"${workspaceFolder}/external/glfw/include",
-                "${workspaceFolder}/external/glm",
-                //"${workspaceFolder}/external/imgui",
-                "${workspaceFolder}/external/physfs/include",
-                "${workspaceFolder}/external/spdlog/include",
-                //"${workspaceFolder}/external/stb",
-                "${workspaceFolder}/external/thread_pool",
-                "${workspaceFolder}/external/toml",
+                //"${workspaceFolder}/deps/bitsery/include",
+                //"${workspaceFolder}/deps/enet/include",
+                "${workspaceFolder}/deps/entt/src",
+                "${workspaceFolder}/deps/glad/include",
+                "${workspaceFolder}/deps/glfw/include",
+                "${workspaceFolder}/deps/glm",
+                //"${workspaceFolder}/deps/imgui",
+                "${workspaceFolder}/deps/physfs/include",
+                "${workspaceFolder}/deps/spdlog/include",
+                //"${workspaceFolder}/deps/stb",
+                "${workspaceFolder}/deps/thread_pool",
+                "${workspaceFolder}/deps/toml",
                 "${workspaceFolder}",
                 "${default}"
             ],
             "defines": [
                 "GLFW_INCLUDE_NONE",
                 "NOMINMAX",
-                "VGAME_CLIENT"
+                "V_CLIENT",
+                "V_DEVBUILD"
             ],
             "cppStandard": "c++17",
             "cStandard": "c99"

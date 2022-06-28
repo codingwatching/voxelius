@@ -10,7 +10,7 @@
  */
 #pragma once
 #include <array>
-#include <common/types.hpp>
+#include <core/types.hpp>
 
 namespace math
 {

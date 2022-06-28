@@ -29,7 +29,7 @@ constexpr static const openmode_t OPEN_AP = openmode_t(1 << 2);
 constexpr static const size_t NPOS = std::numeric_limits<size_t>::max();
 
 bool init(const std::string &argv_0);
-void shutdown();
+bool shutdown();
 
 bool setwr(const rpath_t &rpath);
 bool mount(const rpath_t &rpath, const vpath_t &vpath, bool append);
@@ -51,6 +51,7 @@ bool readline(file_t *vfile, std::string &out);
 
 const rpath_t wr();
 const vpath_t root();
+const std::string error();
 
 bool readBytes(const vpath_t &vpath, std::vector<uint8_t> &out);
 bool readString(const vpath_t &vpath, std::string &out);

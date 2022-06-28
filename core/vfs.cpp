@@ -8,16 +8,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include <common/vfs.hpp>
+#include <core/vfs.hpp>
 #include <spdlog/spdlog.h>
 
 namespace detail
 {
-static inline const std::string lastError()
-{
-    return PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
-}
-
 static inline const bool checkStr(const std::string &tok)
 {
     if(tok == "." || tok == "..")
@@ -32,54 +27,32 @@ static inline const bool checkStr(const std::string &tok)
 
 bool vfs::init(const std::string &argv_0)
 {
-    if(PHYSFS_init(argv_0.c_str()))
-        return true;
-    spdlog::error("vfs: init failed: {}", detail::lastError());
-    return false;
+    return !!PHYSFS_init(argv_0.c_str());
 }
 
-void vfs::shutdown()
+bool vfs::shutdown()
 {
-    if(PHYSFS_deinit())
-        return;
-    spdlog::warn("vfs: proper deinit failed: {}", detail::lastError());
+    return !!PHYSFS_deinit();
 }
 
 bool vfs::setwr(const vfs::rpath_t &rpath)
 {
-    const std::string rstr = rpath.native();
-    if(PHYSFS_setWriteDir(rstr.c_str()))
-        return true;
-    spdlog::error("vfs: setwr [{}] failed: {}", rstr, detail::lastError());
-    return false;
+    return !!PHYSFS_setWriteDir(rpath.native().c_str());
 }
 
 bool vfs::mount(const vfs::rpath_t &rpath, const vfs::vpath_t &vpath, bool append)
 {
-    const std::string rstr = rpath.native();
-    const std::string vstr = vpath.string();
-    if(PHYSFS_mount(rstr.c_str(), vstr.c_str(), append ? 1 : 0))
-        return true;
-    spdlog::error("vfs: mount [{} -> {}] failed: {}", rstr, vstr, detail::lastError());
-    return false;
+    return !!PHYSFS_mount(rpath.native().c_str(), vpath.string().c_str(), append ? 1 : 0);
 }
 
 bool vfs::umount(const vfs::rpath_t &rpath)
 {
-    const std::string rstr = rpath.native();
-    if(PHYSFS_unmount(rstr.c_str()))
-        return true;
-    spdlog::error("vfs: umount [{}] failed: {}", rstr, detail::lastError());
-    return false;
+    return !!PHYSFS_unmount(rpath.native().c_str());
 }
 
 bool vfs::mkdir(const vfs::vpath_t &vpath)
 {
-    const std::string vstr = vpath.string();
-    if(PHYSFS_mkdir(vstr.c_str()))
-        return true;
-    spdlog::error("vfs: mkdir [{}] failed: {}", vstr, detail::lastError());
-    return false;
+    return !!PHYSFS_mkdir(vpath.string().c_str());
 }
 
 bool vfs::exists(const vfs::vpath_t &vpath)
@@ -159,11 +132,6 @@ vfs::file_t *vfs::open(const vfs::vpath_t &vpath, vfs::openmode_t mode)
         return nullptr;
     } while(false);
 
-    if(!vfile) {
-        spdlog::error("vfs: open [{}, {}] failed: {}", vstr, mode, detail::lastError());
-        return nullptr;
-    }
-
     return vfile;
 }
 
@@ -217,6 +185,11 @@ const vfs::rpath_t vfs::wr()
 const vfs::vpath_t vfs::root()
 {
     return vfs::vpath_t("/");
+}
+
+const std::string vfs::error()
+{
+    return PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
 }
 
 bool vfs::readBytes(const vfs::vpath_t &vpath, std::vector<uint8_t> &out)

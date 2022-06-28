@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Tue Jun 28 2022 01:10:16.
+ * Created: Tue Jun 28 2022 01:06:09.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,9 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/vfs.hpp>
+#include <core/types.hpp>
+#include <string>
 
-namespace util
+namespace math
 {
-bool include(const vfs::vpath_t &vpath, std::string &out, const std::string &comment = "//");
-} // namespace util
+hash_t crc64(const void *s, size_t n);
+hash_t crc64(const std::string &s);
+} // namespace math

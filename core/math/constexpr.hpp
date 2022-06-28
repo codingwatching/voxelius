@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
+#include <core/types.hpp>
 #include <type_traits>
 
 namespace math
