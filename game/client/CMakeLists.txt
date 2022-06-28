@@ -9,9 +9,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 add_library(vclient STATIC "")
+target_compile_definitions(vclient PUBLIC GLFW_INCLUDE_NONE)
 target_include_directories(vclient PUBLIC "${CMAKE_SOURCE_DIR}")
 target_link_libraries(vclient PUBLIC vcore glad glfw)
 
+## This is a hack: we don't have vshared yet.
+target_link_libraries(vclient PUBLIC EnTT)
+
 set(SOURCES)
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/globals.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/vclient.cpp")
 target_sources(vclient PRIVATE ${SOURCES})

@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/* 
+/*
  * Copyright (c), 2022, Voxelius Team.
  * Created: Tue Jun 28 2022 01:09:42.
  * Author: Kirill GPRB.
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -36,7 +36,6 @@ template<typename clock_type>
 inline util::Clock<clock_type>::Clock()
     : start_time(now())
 {
-
 }
 
 template<typename clock_type>

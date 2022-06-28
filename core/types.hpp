@@ -1,25 +1,25 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/* 
+/*
  * Copyright (c), 2022, Voxelius Team.
  * Created: Mon Jun 27 2022 22:12:54.
  * Author: Kirill GPRB.
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <inttypes.h>
-#include <stddef.h>
 #include <limits>
+#include <stddef.h>
 
 // float-sized types
 using matrix4f_t = glm::mat<4, 4, float, glm::packed_highp>;

@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/* 
+/*
  * Copyright (c), 2022, Voxelius Team.
  * Created: Tue Jun 28 2022 00:54:00.
  * Author: Kirill GPRB.
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -11,8 +11,8 @@
 #pragma once
 #include <core/vfs/file.hpp>
 #include <spdlog/spdlog.h>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 #include <toml.hpp>
 
 template<typename impl_type>

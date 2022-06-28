@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/* 
+/*
  * Copyright (c), 2022, Voxelius Team.
  * Created: Tue Jun 28 2022 00:43:41.
  * Author: Kirill GPRB.
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -23,7 +23,8 @@ static inline const bool checkOpt(const std::string &argv)
 static inline const std::string getOpt(const std::string &argv)
 {
     size_t i;
-    for(i = 0; argv[i] == '-'; i++);
+    for(i = 0; argv[i] == '-'; i++)
+        ;
     return std::string(argv.cbegin() + i, argv.cend());
 }
 } // namespace detail
@@ -55,11 +56,10 @@ void cmdline::append(int argc, char **argv)
                 cmdline::append(opt, argv[++i]);
                 continue;
             }
-            
+
             cmdline::append(opt);
         }
     }
-
 }
 
 bool cmdline::exists(const std::string &opt)
