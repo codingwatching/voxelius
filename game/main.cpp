@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     vfs::init(argv[0]);
     vfs::mount(fs_std::current_path() / "assets", vfs::root(), true);
     vfs::mount(fs_std::current_path() / "default", vfs::root(), true);
+    vfs::mount(fs_std::current_path() / "rwroot", vfs::root(), true);
     vfs::setwr(fs_std::current_path() / "rwroot");
 
     spdlog::info("main.cpp stub in action lmao");
@@ -62,6 +63,11 @@ int main(int argc, char **argv)
     vfs::mkdir(subpath);
     vfs::file_t *vfile = vfs::open(subpath / "test.txt", vfs::OPEN_WR | vfs::OPEN_AP);
     vfs::write(vfile, text.data(), text.length());
+    vfs::close(vfile);
+    std::string line;
+    vfile = vfs::open(subpath / "test.txt", vfs::OPEN_RD);
+    while(vfs::readline(vfile, line))
+        spdlog::info("{}", line);
     vfs::close(vfile);
 
 #if defined(VGAME_CLIENT)

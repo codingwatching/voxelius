@@ -193,13 +193,14 @@ size_t vfs::write(vfs::file_t *vfile, const void *buffer, size_t size)
 
 bool vfs::readline(file_t *vfile, std::string &out)
 {
+    char tmp[2] = { 0 };
     if(vfile && !PHYSFS_eof(vfile)) {
-        char ch;
         out.clear();
-        while(PHYSFS_readBytes(vfile, &ch, sizeof(ch)) == 1) {
-            if(ch == '\n')
+        while(PHYSFS_readBytes(vfile, tmp, 1) == 1) {
+            tmp[1] = 0x00; // make sure it's terminated.
+            if(tmp[0] == '\n')
                 break;
-            out.append(std::string(ch, 1));
+            out.append(tmp);
         }
 
         return true;
