@@ -49,19 +49,20 @@ int main(int argc, char **argv)
         spdlog::info("setting log_level to DEBUG");
     }
 
-    vfs::addPathRO_A("base");
-    vfs::addPathRO_A("assets");
-
-    if(!vfs::setRootRW(fs_std::current_path() / "rwroot")) {
-        spdlog::error("fs: unable to find or create rw_root directory");
-        std::terminate();
-    }
+    vfs::init(argv[0]);
+    vfs::mount(fs_std::current_path() / "assets", vfs::root(), true);
+    vfs::mount(fs_std::current_path() / "default", vfs::root(), true);
+    vfs::setwr(fs_std::current_path() / "rwroot");
 
     spdlog::info("main.cpp stub in action lmao");
 
     // Ouch
-    std::ofstream ofile = vfs::openWr("test.txt", vfs::IO_APPEND);
-    vfs::writeString(ofile, "appending!");
+    const std::string text = "Appending!\n";
+    const vfs::vpath_t subpath = vfs::vpath_t("/sub/path/");
+    vfs::mkdir(subpath);
+    vfs::file_t *vfile = vfs::open(subpath / "test.txt", vfs::OPEN_WR | vfs::OPEN_AP);
+    vfs::write(vfile, text.data(), text.length());
+    vfs::close(vfile);
 
 #if defined(VGAME_CLIENT)
     // run client here

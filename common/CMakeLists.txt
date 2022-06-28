@@ -1,6 +1,6 @@
 add_library(common STATIC "")
 target_include_directories(common PUBLIC "${CMAKE_SOURCE_DIR}")
-target_link_libraries(common PUBLIC glm spdlog thread_pool toml)
+target_link_libraries(common PUBLIC glm physfs spdlog thread_pool toml)
 
 target_sources(common PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/cmdline.cpp"

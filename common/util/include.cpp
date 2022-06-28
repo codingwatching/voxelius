@@ -12,16 +12,16 @@
 #include <spdlog/fmt/fmt.h>
 #include <stdio.h>
 
-bool util::include(const fs_std::path &vpath, std::string &out, const std::string &comment)
+bool util::include(const vfs::vpath_t &vpath, std::string &out, const std::string &comment)
 {
-    std::ifstream ifile = vfs::openRd(vpath);
-    if(!ifile.is_open())
+    vfs::file_t *vfile = vfs::open(vpath, vfs::OPEN_RD);
+    if(!vfile)
         return false;
 
     out.clear();
 
     std::string line;
-    while(std::getline(ifile, line)) {
+    while(vfs::readline(vfile, line)) {
         // I use sscanf here because it's a bit more
         // convenient to have the formatted input instead
         // of this earse(), insert() and find() fuckery.

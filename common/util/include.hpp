@@ -13,5 +13,5 @@
 
 namespace util
 {
-bool include(const fs_std::path &vpath, std::string &out, const std::string &comment = "//");
+bool include(const vfs::vpath_t &vpath, std::string &out, const std::string &comment = "//");
 } // namespace util

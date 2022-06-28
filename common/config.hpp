@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/vfs.hpp>
+#include <common/vfs/file.hpp>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 #include <sstream>
@@ -18,8 +18,8 @@
 template<typename impl_type>
 class TomlConfig {
 public:
-    bool read(const fs_std::path &path);
-    void write(const fs_std::path &path);
+    bool read(const vfs::Path &path);
+    void write(const vfs::Path &path);
 
     // implementations define:
     //  void impl_postRead();
@@ -30,14 +30,13 @@ public:
 };
 
 template<typename impl_type>
-inline bool TomlConfig<impl_type>::read(const fs_std::path &vpath)
+inline bool TomlConfig<impl_type>::read(const vfs::Path &path)
 {
     bool success = true;
 
     try {
         std::string source;
-        std::ifstream ifile = vfs::openRd(vpath, vfs::IO_FAV_RW);
-        if(!vfs::readString(ifile, source))
+        if(!vfs::File::readString(path, source))
             throw std::runtime_error("unable to read file");
         toml = toml::parse(source);
     }
@@ -53,11 +52,10 @@ inline bool TomlConfig<impl_type>::read(const fs_std::path &vpath)
 }
 
 template<typename impl_type>
-inline void TomlConfig<impl_type>::write(const fs_std::path &vpath)
+inline void TomlConfig<impl_type>::write(const vfs::Path &path)
 {
     static_cast<impl_type *>(this)->impl_preWrite();
     std::stringstream ss;
     ss << toml;
-    std::ofstream ofile = vfs::openWr(vpath, vfs::IO_FAV_RW);
-    vfs::writeString(ofile, ss.str());
+    vfs::File::writeString(path, ss.str());
 }

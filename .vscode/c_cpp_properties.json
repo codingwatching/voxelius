@@ -10,6 +10,7 @@
                 //"${workspaceFolder}/external/glfw/include",
                 "${workspaceFolder}/external/glm",
                 //"${workspaceFolder}/external/imgui",
+                "${workspaceFolder}/external/physfs/include",
                 "${workspaceFolder}/external/spdlog/include",
                 //"${workspaceFolder}/external/stb",
                 "${workspaceFolder}/external/thread_pool",
