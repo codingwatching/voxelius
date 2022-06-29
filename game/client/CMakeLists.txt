@@ -11,10 +11,7 @@
 add_library(client STATIC "")
 target_compile_definitions(client PUBLIC GLFW_INCLUDE_NONE)
 target_include_directories(client PUBLIC "${CMAKE_SOURCE_DIR}")
-target_link_libraries(client PUBLIC common glad glfw)
-
-## FIXME: depend on shared instead
-target_link_libraries(client PUBLIC EnTT)
+target_link_libraries(client PUBLIC common shared glad glfw)
 
 set(SOURCES)
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/client.cpp")

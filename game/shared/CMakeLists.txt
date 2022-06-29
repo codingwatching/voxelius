@@ -8,4 +8,6 @@
 ## License, v. 2.0. If a copy of the MPL was not distributed with this
 ## file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
+add_library(shared INTERFACE)
+target_include_directories(shared INTERFACE "${GIT_REPO_ROOT}")
+target_link_libraries(shared INTERFACE EnTT common)

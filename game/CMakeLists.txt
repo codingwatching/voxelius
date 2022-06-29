@@ -13,9 +13,9 @@ option(BUILD_DEV "Build development-friendly executables" ON)
 option(BUILD_INTSRV "Link client with an integrated server library" OFF)
 
 ## More internal projects.
-add_subdirectory(client)
-add_subdirectory(server)
 add_subdirectory(shared)
+add_subdirectory(server)
+add_subdirectory(client)
 
 ## Client application.
 add_executable(vcl "${CMAKE_CURRENT_LIST_DIR}/main.cpp")
