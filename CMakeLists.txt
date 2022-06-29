@@ -1,3 +1,13 @@
+## SPDX-License-Identifier: MPL-2.0
+## 
+## Copyright (c), 2022, Voxelius Team.
+## Created: Wed Jun 29 2022 14:47:46.
+## Author: Kirill GPRB.
+## 
+## This Source Code Form is subject to the terms of the Mozilla Public
+## License, v. 2.0. If a copy of the MPL was not distributed with this
+## file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 cmake_minimum_required(VERSION 3.10)
 project(voxelius LANGUAGES CXX VERSION 0.0.1)
 
@@ -14,18 +24,16 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-#add_subdirectory(deps/bitsery)
-#add_subdirectory(deps/enet)
-add_subdirectory(deps/entt)
-add_subdirectory(deps/glad)
-add_subdirectory(deps/glfw)
-add_subdirectory(deps/glm)
-#add_subdirectory(deps/imgui)
-add_subdirectory(deps/physfs)
-add_subdirectory(deps/spdlog)
-#add_subdirectory(deps/stb)
-add_subdirectory(deps/thread_pool)
-add_subdirectory(deps/toml)
+## External dependencies.
+add_subdirectory(external/entt)
+add_subdirectory(external/glad)
+add_subdirectory(external/glfw)
+add_subdirectory(external/glm)
+add_subdirectory(external/physfs)
+add_subdirectory(external/spdlog)
+add_subdirectory(external/thread_pool)
+add_subdirectory(external/toml)
 
-add_subdirectory(core)
+## Internal projects.
+add_subdirectory(common)
 add_subdirectory(game)

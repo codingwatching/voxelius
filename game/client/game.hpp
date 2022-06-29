@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Wed Jun 29 2022 15:36:51.
+ * Created: Wed Jun 29 2022 21:55:07.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,27 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
-#include <entt/signal/dispatcher.hpp>
 
-// Defined in <GLFW/glfw3.h.
-struct GLFWwindow;
-
-namespace client_globals
+namespace client_game
 {
-// Windowing and events
-extern GLFWwindow *window;
-extern entt::dispatcher dispatcher;
-
-// Counters
-extern float epoch;
-extern float frametime;
-extern float frametime_avg;
-extern size_t frame_count;
-} // namespace client_globals
+void initialize();
+void shutdown();
+void update();
+void lateUpdate();
+void render();
+} // namespace client_game
 
 // Alias namespaces.
 // This generally protects us from
 // linkage errors (both client and
 // server have a globals namespace).
-namespace globals = client_globals;
+namespace game = client_game;
