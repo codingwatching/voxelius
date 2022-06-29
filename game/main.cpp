@@ -173,11 +173,11 @@ int main(int argc, char **argv)
     }
 
 #if defined(BUILD_VCL)
-    spdlog::info("Running client...");
+    spdlog::info("running client...");
     client::run();
 #elif defined(BUILD_VDS)
-    spdlog::info("Running dedicated server...");
-    spdlog::error("Not implemented!");
+    spdlog::info("running dedicated server...");
+    spdlog::error("not implemented!");
 #else
 #    error Amogus
 #endif
