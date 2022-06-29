@@ -121,11 +121,6 @@ int main(int argc, char **argv)
     cmdline::clear();
     cmdline::append(argc, argv);
 
-#if defined(BUILD_DEV)
-    spdlog::warn("Development build.");
-    spdlog::warn("Local paths (source tree) will be used for mounting.");
-#endif
-
 #if defined(NDEBUG)
     // When not built for debugging,
     // we still might want to see the
