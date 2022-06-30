@@ -8,9 +8,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include <common/util/split.hpp>
-#include <spdlog/spdlog.h>
-const std::vector<std::string> util::split(const std::string &str, const std::string &sep)
+#include <common/strtools.hpp>
+
+const std::vector<std::string> strtools::split(const std::string &str, const std::string &sep)
 {
     size_t cpos = 0;
     size_t lpos = 0;

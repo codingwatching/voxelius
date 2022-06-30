@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
+#include <cstddef>
 #include <entt/signal/dispatcher.hpp>
 
 // Defined in <GLFW/glfw3.h.
@@ -22,10 +22,10 @@ extern GLFWwindow *window;
 extern entt::dispatcher dispatcher;
 
 // Counters
-extern float epoch;
-extern float frametime;
-extern float frametime_avg;
-extern size_t frame_count;
+extern double epoch;
+extern double frametime;
+extern double frametime_avg;
+extern std::size_t frame_count;
 } // namespace client_globals
 
 // Alias namespaces.

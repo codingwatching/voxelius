@@ -17,20 +17,20 @@
 #include <game/client/input.hpp>
 #include <spdlog/spdlog.h>
 
-static float last_xpos = 0.0f;
-static float last_ypos = 0.0f;
+static double last_xpos = 0.0f;
+static double last_ypos = 0.0f;
 static void onCursorMove(GLFWwindow *window, double xpos, double ypos)
 {
     events::CursorMove event = {};
-    event.xpos = static_cast<float>(xpos);
-    event.ypos = static_cast<float>(ypos);
-    event.dx = event.xpos - last_xpos;
-    event.dy = event.ypos - last_ypos;
+    event.xpos = xpos;
+    event.ypos = ypos;
+    event.dx = xpos - last_xpos;
+    event.dy = ypos - last_ypos;
     globals::dispatcher.trigger(event);
 
     // Store previous positions
-    last_xpos = event.xpos;
-    last_ypos = event.ypos;
+    last_xpos = xpos;
+    last_ypos = ypos;
 }
 
 static void onKeyboardKey(GLFWwindow *window, int key, int scn, int act, int mod)
@@ -54,8 +54,8 @@ static void onMouseButton(GLFWwindow *window, int btn, int act, int mod)
 static void onMouseScroll(GLFWwindow *window, double dx, double dy)
 {
     events::MouseScroll event = {};
-    event.dx = static_cast<float>(dx);
-    event.dy = static_cast<float>(dy);
+    event.dx = dx;
+    event.dy = dy;
     globals::dispatcher.trigger(event);
 }
 

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Thu Jun 30 2022 01:18:56.
+ * Created: Fri Jul 01 2022 00:49:40.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,11 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
+#include <common/vfs.hpp>
 
-namespace comp
+namespace fstools
 {
-struct Velocity final {
-    vector3f_t linear { VECTOR3F_ZERO };
-};
-} // namespace comp
+bool include(const vfs::vpath_t &path, std::string &out, const std::string &comment = "//");
+} // namespace fstools
+

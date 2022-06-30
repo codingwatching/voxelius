@@ -28,33 +28,33 @@ struct DrawElementsCmd final {
 class DrawCommand final : public Object<DrawCommand> {
 public:
     DrawCommand() = default;
-    DrawCommand(GLenum mode, size_t vertices, size_t instances, size_t base_vertex, size_t base_instance);
-    DrawCommand(GLenum mode, GLenum type, size_t indices, size_t instances, size_t base_index, size_t base_vertex, size_t base_instance);
+    DrawCommand(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance);
+    DrawCommand(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance);
     DrawCommand(DrawCommand &&rhs);
     DrawCommand &operator=(DrawCommand &&rhs);
     void create();
     void destroy();
-    void set(GLenum mode, size_t vertices, size_t instances, size_t base_vertex, size_t base_instance);
-    void set(GLenum mode, GLenum type, size_t indices, size_t instances, size_t base_index, size_t base_vertex, size_t base_instance);
+    void set(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance);
+    void set(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance);
     void invoke() const;
-    size_t size() const;
+    std::size_t size() const;
 
 private:
     bool indexed {false};
     GLenum mode {0};
     GLenum type {0};
-    size_t nv {0};
+    std::size_t nv {0};
 };
 } // namespace gl
 
-inline gl::DrawCommand::DrawCommand(GLenum mode, size_t vertices, size_t instances, size_t base_vertex, size_t base_instance)
+inline gl::DrawCommand::DrawCommand(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
     : indexed(false), mode(mode), type(0), nv(0)
 {
     create();
     set(mode, vertices, instances, base_vertex, base_instance);
 }
 
-inline gl::DrawCommand::DrawCommand(GLenum mode, GLenum type, size_t indices, size_t instances, size_t base_index, size_t base_vertex, size_t base_instance)
+inline gl::DrawCommand::DrawCommand(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
     : indexed(true), mode(mode), type(type), nv(0)
 {
     create();
@@ -100,7 +100,7 @@ inline void gl::DrawCommand::destroy()
     }
 }
 
-inline void gl::DrawCommand::set(GLenum mode, size_t vertices, size_t instances, size_t base_vertex, size_t base_instance)
+inline void gl::DrawCommand::set(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
 {
     nv = vertices;
     indexed = false;
@@ -113,7 +113,7 @@ inline void gl::DrawCommand::set(GLenum mode, size_t vertices, size_t instances,
     glNamedBufferData(handle, static_cast<GLsizeiptr>(sizeof(cmd)), &cmd, GL_STATIC_DRAW);
 }
 
-inline void gl::DrawCommand::set(GLenum mode, GLenum type, size_t indices, size_t instances, size_t base_index, size_t base_vertex, size_t base_instance)
+inline void gl::DrawCommand::set(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
 {
     nv = indices;
     indexed = true;
@@ -140,7 +140,7 @@ inline void gl::DrawCommand::invoke() const
     glDrawArraysIndirect(mode, nullptr);
 }
 
-inline size_t gl::DrawCommand::size() const
+inline std::size_t gl::DrawCommand::size() const
 {
     return nv;
 }

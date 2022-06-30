@@ -7,7 +7,8 @@
 #pragma once
 #include <game/client/gl/object.hpp>
 #include <game/client/gl/pixel_format.hpp>
-#include <common/math/constexpr.hpp>
+#include <glm/common.hpp>
+#include <common/cxpr.hpp>
 
 namespace gl
 {
@@ -94,7 +95,7 @@ inline gl::Texture2D &gl::Texture2D::operator=(gl::Texture2D &&rhs)
 inline bool gl::Texture2D::storage(int width, int height, gl::PixelFormat format)
 {
     if(GLenum f = gl::detail::getPixelFormatGPU(format)) {
-        glTextureStorage2D(handle, math::log2<int>(glm::max(width, height)), f, width, height);
+        glTextureStorage2D(handle, cxpr::log2<int>(glm::max(width, height)), f, width, height);
         return true;
     }
 
@@ -134,7 +135,7 @@ inline gl::Texture2DArray &gl::Texture2DArray::operator=(gl::Texture2DArray &&rh
 inline bool gl::Texture2DArray::storage(int width, int height, int layers, gl::PixelFormat format)
 {
     if(GLenum f = gl::detail::getPixelFormatGPU(format)) {
-        glTextureStorage3D(handle, math::log2<int>(glm::max(width, height)), f, width, height, layers);
+        glTextureStorage3D(handle, cxpr::log2<int>(glm::max(width, height)), f, width, height, layers);
         return true;
     }
 

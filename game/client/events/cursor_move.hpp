@@ -13,9 +13,9 @@
 namespace events
 {
 struct CursorMove final {
-    float xpos;
-    float ypos;
-    float dx;
-    float dy;
+    double xpos;
+    double ypos;
+    double dx;
+    double dy;
 };
 } // namespace events

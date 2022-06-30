@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <GLFW/glfw3.h>
-#include <common/util/clock.hpp>
+#include <common/clock.hpp>
 #include <exception>
 #include <game/client/client.hpp>
 #include <game/client/game.hpp>
@@ -33,14 +33,12 @@ void client::run()
         std::terminate();
     }
 
-    // UNDONE: window should be able to
-    // dynamically resize. But not now...
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
-    // Sets all the required window hints for the
-    // GLFW to correctly prepare context for us.
     gl::earlyInit();
 
+    // UNDONE: window resizing.
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    // UNDONE: a configuration file.
     globals::window = glfwCreateWindow(640, 480, "VX_CLIENT", nullptr, nullptr);
     if(!globals::window) {
         spdlog::critical("glfw: unable to open a window.");
@@ -50,24 +48,30 @@ void client::run()
     glfwMakeContextCurrent(globals::window);
 
     gl::initialize();
-
+    
     input::initialize();
 
     game::initialize();
 
     // Reset counters
-    globals::epoch = 0.0f;
-    globals::frametime = 0.0f;
-    globals::frametime_avg = 0.0f;
+    globals::epoch = 0.0;
+    globals::frametime = 0.0;
+    globals::frametime_avg = 0.0;
     globals::frame_count = 0;
 
-    util::Clock<std::chrono::high_resolution_clock> clock;
+    Clock<std::chrono::high_resolution_clock> clock;
+    Clock<std::chrono::high_resolution_clock> clock_perf;
     while(!glfwWindowShouldClose(globals::window)) {
-        globals::epoch = util::seconds<float>(clock.now().time_since_epoch());
-        globals::frametime = util::seconds<float>(clock.reset());
+        globals::epoch = clock.seconds(clock.now().time_since_epoch());
+        globals::frametime = clock.seconds(clock.reset());
         globals::frametime_avg += globals::frametime;
-        globals::frametime_avg *= 0.5f;
+        globals::frametime_avg *= 0.5;
         globals::frame_count++;
+
+        if(clock_perf.seconds(clock_perf.elapsed()) >= 0.0625) {
+            spdlog::info("{:.03f} ms ({:.02f} FPS)", globals::frametime_avg * 1.0e3, 1.0 / globals::frametime_avg);
+            clock_perf.reset();
+        }
 
         game::update();
 
@@ -91,7 +95,7 @@ void client::run()
     }
 
     spdlog::info("client shutdown after {} frames.", globals::frame_count);
-    spdlog::info("average frametime: {:.03f} ms ({:.02f} FPS)", globals::frametime_avg * 1.0e3f, 1.0f / globals::frametime_avg);
+    spdlog::info("average frametime: {:.03f} ms ({:.02f} FPS)", globals::frametime_avg * 1.0e3, 1.0 / globals::frametime_avg);
 
     game::shutdown();
 

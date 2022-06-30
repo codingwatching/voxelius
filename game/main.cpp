@@ -9,7 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <common/cmdline.hpp>
-#include <common/util/spdlog_sinks.hpp>
 #include <common/vfs.hpp>
 #include <game/client/client.hpp>
 #include <iostream>
@@ -110,7 +109,8 @@ int main(int argc, char **argv)
         // Try to setup a color stderr sink.
         spdlog::logger *lp = spdlog::default_logger_raw();
         lp->sinks().clear();
-        lp->sinks().push_back(util::makeSinkSimple<spdlog::sinks::stderr_color_sink_mt>());
+        lp->sinks().push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
+        lp->set_pattern("[%H:%M:%S] %^[%L]%$ %v");
     }
     catch(const spdlog::spdlog_ex &ex) {
         // Failed! Fall back to iostream and die.

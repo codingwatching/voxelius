@@ -14,20 +14,20 @@ target_link_libraries(common PUBLIC glm physfs spdlog thread_pool toml)
 
 set(SOURCES)
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/cmdline.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/crc64.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/fstools.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/strtools.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/vfs.cpp")
 target_sources(common PRIVATE ${SOURCES})
-
-add_subdirectory(math)
-add_subdirectory(util)
 
 if(WIN32)
     ## Definitions in <windows.h> conflict with
     ## the standard constexpr functions in <limits>
-    target_compile_definitions(v_common PUBLIC NOMINMAX)
+    target_compile_definitions(common PUBLIC NOMINMAX)
 endif()
 
 if(MSVC)
     ## MSVC really doesn't like how we just use
     ## functions marked by MS as "unsafe" safely.
-    target_compile_definitions(v_common PUBLIC _CRT_SECURE_NO_WARNINGS)
+    target_compile_definitions(common PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif()

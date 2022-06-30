@@ -20,9 +20,9 @@ public:
     Buffer &operator=(Buffer &&rhs);
     void create();
     void destroy();
-    void storage(size_t size, const void *data, GLbitfield flags);
-    void resize(size_t new_size, const void *data, GLbitfield usage);
-    void write(size_t offset, size_t size, const void *data);
+    void storage(std::size_t size, const void *data, GLbitfield flags);
+    void resize(std::size_t new_size, const void *data, GLbitfield usage);
+    void write(std::size_t offset, std::size_t size, const void *data);
 };
 } // namespace gl
 
@@ -53,17 +53,17 @@ inline void gl::Buffer::destroy()
     }
 }
 
-inline void gl::Buffer::storage(size_t size, const void *data, GLbitfield flags)
+inline void gl::Buffer::storage(std::size_t size, const void *data, GLbitfield flags)
 {
     glNamedBufferStorage(handle, static_cast<GLsizeiptr>(size), data, flags);
 }
 
-inline void gl::Buffer::resize(size_t new_size, const void *data, GLbitfield usage)
+inline void gl::Buffer::resize(std::size_t new_size, const void *data, GLbitfield usage)
 {
     glNamedBufferData(handle, static_cast<GLsizeiptr>(new_size), data, usage);
 }
 
-inline void gl::Buffer::write(size_t offset, size_t size, const void *data)
+inline void gl::Buffer::write(std::size_t offset, std::size_t size, const void *data)
 {
     glNamedBufferSubData(handle, static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 }

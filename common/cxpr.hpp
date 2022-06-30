@@ -9,17 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
+#include <cstddef>
 #include <type_traits>
 
-namespace math
+namespace cxpr
 {
 template<typename T>
 constexpr static inline const T log2(const T x)
 {
     if(x < 2)
         return 0;
-    return math::log2<T>((x + 1) >> 1) + 1;
+    return cxpr::log2<T>((x + 1) >> 1) + 1;
 }
 
 template<typename T, typename F>
@@ -68,30 +68,9 @@ constexpr static inline const T clamp(const T x, const T min, const T max)
     return x;
 }
 
-template<typename T, size_t L>
-constexpr static inline const size_t arraySize(T (&)[L])
+template<typename T, std::size_t L>
+constexpr static inline const std::size_t arraySize(T (&)[L])
 {
     return L;
 }
-
-constexpr static inline const bool isInBB(const vector3f_t &p, const vector3f_t &a, const vector3f_t &b)
-{
-    return p.x >= a.x && p.y >= a.y && p.z >= a.z && p.x <= b.x && p.y <= b.y && p.z <= b.z;
-}
-
-template<typename T>
-constexpr static inline void vecToArray(const T &vec, typename T::value_type array[T::length()])
-{
-    for(typename T::length_type i = 0; i < T::length(); i++)
-        array[i] = vec[i];
-}
-
-template<typename T>
-constexpr static inline const T arrayToVec(const typename T::value_type array[T::length()])
-{
-    T vec;
-    for(typename T::length_type i = 0; i < T::length(); i++)
-        vec[i] = array[i];
-    return vec;
-}
-} // namespace math
+} // namespace cxpr

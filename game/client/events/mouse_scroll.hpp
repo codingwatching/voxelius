@@ -13,7 +13,7 @@
 namespace events
 {
 struct MouseScroll final {
-    float dx;
-    float dy;
+    double dx;
+    double dy;
 };
 } // namespace events

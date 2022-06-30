@@ -8,7 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include <common/util/split.hpp>
+#include <common/strtools.hpp>
 #include <common/vfs.hpp>
 #include <spdlog/spdlog.h>
 
@@ -83,7 +83,7 @@ bool vfs::isSymlink(const vfs::vpath_t &path)
 bool vfs::isPathValid(const vfs::vpath_t &path)
 {
     if(path.is_absolute() && path.root_path() == vfs::getRootPath()) {
-        std::vector<std::string> bits = util::split(path.string(), std::string(vfs::vpath_t::preferred_separator, 1));
+        std::vector<std::string> bits = strtools::split(path.string(), std::string(vfs::vpath_t::preferred_separator, 1));
         for(const std::string &bit : bits) {
             if(checkPathBit(bit))
                 continue;

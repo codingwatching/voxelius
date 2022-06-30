@@ -43,7 +43,7 @@ static inline void checkShaderInfoLog(GLuint shader)
     GLint length;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
     if(length > 1) {
-        std::string info_log(static_cast<size_t>(length) + 1, static_cast<char>(0));
+        std::string info_log(static_cast<std::size_t>(length) + 1, static_cast<char>(0));
         glGetShaderInfoLog(shader, static_cast<GLsizei>(info_log.size()), nullptr, info_log.data());
         spdlog::debug(info_log);
     }
@@ -54,7 +54,7 @@ static inline void checkProgramInfoLog(GLuint program)
     GLint length;
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
     if(length > 1) {
-        std::string info_log(static_cast<size_t>(length) + 1, static_cast<char>(0));
+        std::string info_log(static_cast<std::size_t>(length) + 1, static_cast<char>(0));
         glGetProgramInfoLog(program, static_cast<GLsizei>(info_log.size()), nullptr, info_log.data());
         spdlog::debug(info_log);
     }

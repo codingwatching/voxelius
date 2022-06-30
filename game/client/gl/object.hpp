@@ -6,8 +6,9 @@
  */
 #pragma once
 #include <common/mixin.hpp>
-#include <common/types.hpp>
+#include <cstddef>
 #include <glad/gl.h>
+#include <utility>
 
 namespace gl
 {

@@ -10,7 +10,6 @@
  */
 #include <GLFW/glfw3.h>
 #include <common/cmdline.hpp>
-#include <common/util/split.hpp>
 #include <exception>
 #include <game/client/gl/context.hpp>
 #include <glad/gl.h>

@@ -19,9 +19,9 @@ public:
     void destroy();
     void bind() const;
     void setIndexBuffer(const Buffer &ibo);
-    void setVertexBuffer(GLuint binding, const Buffer &vbo, size_t stride);
+    void setVertexBuffer(GLuint binding, const Buffer &vbo, std::size_t stride);
     void enableAttribute(GLuint attrib, bool enable);
-    void setAttributeFormat(GLuint attrib, GLenum type, size_t count, size_t offset, bool normalized);
+    void setAttributeFormat(GLuint attrib, GLenum type, std::size_t count, std::size_t offset, bool normalized);
     void setAttributeBinding(GLuint attrib, GLuint binding);
 };
 } // namespace gl
@@ -63,7 +63,7 @@ inline void gl::VertexArray::setIndexBuffer(const gl::Buffer &ibo)
     glVertexArrayElementBuffer(handle, ibo.get());
 }
 
-inline void gl::VertexArray::setVertexBuffer(GLuint binding, const gl::Buffer &vbo, size_t stride)
+inline void gl::VertexArray::setVertexBuffer(GLuint binding, const gl::Buffer &vbo, std::size_t stride)
 {
     glVertexArrayVertexBuffer(handle, binding, vbo.get(), 0, static_cast<GLsizei>(stride));
 }
@@ -78,7 +78,7 @@ inline void gl::VertexArray::enableAttribute(GLuint attrib, bool enable)
     glDisableVertexArrayAttrib(handle, attrib);
 }
 
-inline void gl::VertexArray::setAttributeFormat(GLuint attrib, GLenum type, size_t count, size_t offset, bool normalized)
+inline void gl::VertexArray::setAttributeFormat(GLuint attrib, GLenum type, std::size_t count, std::size_t offset, bool normalized)
 {
     switch(type) {
         case GL_FLOAT:

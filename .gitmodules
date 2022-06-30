@@ -1,6 +1,3 @@
-[submodule "external/glm"]
-	path = external/glm
-	url = https://github.com/g-truc/glm.git
 [submodule "external/spdlog"]
 	path = external/spdlog
 	url = https://github.com/gabime/spdlog.git
@@ -13,3 +10,9 @@
 [submodule "external/glfw"]
 	path = external/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "external/reactphysics3d"]
+	path = external/reactphysics3d
+	url = https://github.com/DanielChappuis/reactphysics3d.git
+[submodule "external/glm"]
+	path = external/glm
+	url = https://github.com/g-truc/glm.git

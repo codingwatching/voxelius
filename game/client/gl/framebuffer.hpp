@@ -7,7 +7,7 @@
 #pragma once
 #include <game/client/gl/renderbuffer.hpp>
 #include <game/client/gl/texture.hpp>
-#include <common/math/constexpr.hpp>
+#include <common/cxpr.hpp>
 
 namespace gl
 {
@@ -79,7 +79,7 @@ template<typename... args_type>
 inline void gl::Framebuffer::setFragmentTargets(args_type &&... args)
 {
     const GLenum attachments[] = { static_cast<GLenum>(args)... };
-    glNamedFramebufferDrawBuffers(handle, static_cast<GLsizei>(math::arraySize(attachments)), attachments);
+    glNamedFramebufferDrawBuffers(handle, static_cast<GLsizei>(cxpr::arraySize(attachments)), attachments);
 }
 
 inline void gl::Framebuffer::unbind()

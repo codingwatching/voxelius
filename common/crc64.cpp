@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include <common/math/crc64.hpp>
+#include <cinttypes>
+#include <common/crc64.hpp>
 
 // I understand that having the table pre-generated
 // is a potentional safety risk but CRC64 is not going
@@ -79,19 +80,19 @@ static const uint64_t crc64_table[256] = {
     0x86B86ED5267CDBD3, 0xC4488F3E8F96ED40, 0x0359AD0275A8B6F5, 0x41A94CE9DC428066,
     0xCF8B0890283E370C, 0x8D7BE97B81D4019F, 0x4A6ACB477BEA5A2A, 0x089A2AACD2006CB9,
     0x14DEA25F3AF9026D, 0x562E43B4931334FE, 0x913F6188692D6F4B, 0xD3CF8063C0C759D8,
-    0x5DEDC41A34BBEEB2, 0x1F1D25F19D51D821, 0xD80C07CD676F8394, 0x9AFCE626CE85B507
+    0x5DEDC41A34BBEEB2, 0x1F1D25F19D51D821, 0xD80C07CD676F8394, 0x9AFCE626CE85B507,
 };
 
-hash_t math::crc64(const void *s, size_t n)
+std::size_t crc64::get(const void *s, std::size_t n)
 {
     const uint8_t *sb = reinterpret_cast<const uint8_t *>(s);
     uint64_t crc = UINT64_C(~0);
     while(n--)
         crc = crc64_table[((crc >> 56) ^ (*sb++)) & 0xFF] ^ (crc << 8);
-    return static_cast<hash_t>(crc);
+    return static_cast<std::size_t>(crc);
 }
 
-hash_t math::crc64(const std::string &s)
+std::size_t crc64::get(const std::string &s)
 {
-    return math::crc64(s.data(), s.size());
+    return crc64::get(s.data(), s.length());
 }

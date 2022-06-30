@@ -9,12 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
 #include <string>
 #include <vector>
 
-namespace util
+namespace strtools
 {
 const std::vector<std::string> split(const std::string &str, const std::string &sep);
-} // namespace util
+} // namespace strtools
 

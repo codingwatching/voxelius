@@ -1,19 +1,16 @@
 /* SPDX-License-Identifier: MPL-2.0 */
-/*
+/* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Tue Jun 28 2022 01:06:09.
+ * Created: Thu Jun 30 2022 10:09:11.
  * Author: Kirill GPRB.
- *
+ * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <common/types.hpp>
-#include <string>
 
-namespace math
+namespace comp
 {
-hash_t crc64(const void *s, size_t n);
-hash_t crc64(const std::string &s);
-} // namespace math
+struct Camera final {};
+} // namespace comp

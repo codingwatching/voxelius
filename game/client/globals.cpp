@@ -15,7 +15,7 @@ GLFWwindow *client_globals::window = nullptr;
 entt::dispatcher client_globals::dispatcher = {};
 
 // Counters
-float client_globals::epoch = 0.0f;
-float client_globals::frametime = 0.0f;
-float client_globals::frametime_avg = 0.0f;
-size_t client_globals::frame_count = 0;
+double client_globals::epoch = 0.0f;
+double client_globals::frametime = 0.0f;
+double client_globals::frametime_avg = 0.0f;
+std::size_t client_globals::frame_count = 0;
