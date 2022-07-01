@@ -10,14 +10,18 @@
  */
 #include <GLFW/glfw3.h>
 #include <common/clock.hpp>
+#include <common/cxpr.hpp>
 #include <game/client/game.hpp>
 #include <game/client/globals.hpp>
+#include <game/client/image.hpp>
 #include <game/client/main.hpp>
 #include <game/shared/const.hpp>
 #include <glad/gl.h>
 #include <reactphysics3d/engine/PhysicsCommon.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
+#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
+#include <vector>
 
 static void onGlfwError(int, const char *message)
 {
@@ -51,6 +55,30 @@ void client::main()
         spdlog::critical("glfw: unable to open a window");
         std::terminate();
     }
+
+    Image w_icon_stb;
+    std::vector<GLFWimage> w_images;
+    const int w_icon_dims[] = { 16, 64, 256 };
+    const std::size_t w_dims_count = cxpr::arraySize(w_icon_dims);
+
+    for(std::size_t i = 0; i < w_dims_count; i++) {
+        const int w_dim = w_icon_dims[i];
+        const std::string w_filename = fmt::format("{}x{}.png", w_dim, w_dim);
+
+        if(w_icon_stb.create(vfs::getRootPath() / vfs::vpath_t(w_filename))) {
+            GLFWimage w_image = {};
+            w_image.width = w_icon_stb.getWidth();
+            w_image.height = w_icon_stb.getHeight();
+            w_image.pixels = reinterpret_cast<unsigned char *>(w_icon_stb.data());
+            w_images.push_back(w_image);
+            w_icon_stb.destroy();
+            continue;
+        }
+
+        spdlog::warn("main: unable to load {}: {}", w_filename, vfs::getError());
+    }
+
+    glfwSetWindowIcon(client_globals::window, static_cast<int>(w_images.size()), w_images.data());
 
     glfwMakeContextCurrent(client_globals::window);
 

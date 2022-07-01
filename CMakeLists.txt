@@ -56,6 +56,7 @@ add_subdirectory(external/glm)
 add_subdirectory(external/physfs)
 add_subdirectory(external/reactphysics3d)
 add_subdirectory(external/spdlog)
+add_subdirectory(external/stb)
 add_subdirectory(external/thread_pool)
 add_subdirectory(external/toml)
 

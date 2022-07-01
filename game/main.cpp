@@ -15,92 +15,78 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-// Returns a native system-specific path
-// to a place where the game should store
-// its default configuration files.
-static inline const vfs::rpath_t getDefaultRPath()
+static inline const vfs::rpath_t getRPathGame()
 {
-    const vfs::rpath_t fallback = fs_std::current_path() / "default";
-
-    std::string dpath_arg;
-    if(cmdline::get("dpath", dpath_arg)) {
-        // Allow path overriding via cmdline.
-        return vfs::rpath_t(dpath_arg);
+    std::string gamepath_arg;
+    if(cmdline::get("gamepath", gamepath_arg)) {
+        // Allow setting game path via cmdline.
+        return vfs::rpath_t(gamepath_arg);
     }
 
+    // TODO: if Voxelius ever gets uploaded
+    // somewhere like AUR or any other package
+    // database, make sure to ifdef the desired
+    // content location specific for the system.
+
 #if defined(BUILD_DEV)
-    // The "default" or fallback directory is present
-    // in the source code tree, so we might like to
-    // use it during development and use it as a
-    // backup solution on release/distribution builds.
-    return fallback;
+    // We are building a development-friendly
+    // version of the game, meaning the clown
+    // behind the monitor wants it to use assets
+    // provided in the source code tree.
+    return fs_std::current_path() / "assets";
 #endif
 
 #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
-    // On UNIX and UNIX-like systems we can straight up
-    // read from the specifically designed subdirectory
-    // that should contain all our default configuration files.
-    return vfs::rpath_t("/etc/games/voxelius");
-#else
-    // On any other system (including Windows), we want
-    // to store default configuration files in a directory
-    // neighbouring the executable, so we "fall back" to it.
-    return fallback;
+    // We are building the game for a system that
+    // has a lot of directories designed specifically
+    // to store application's read-only data.
+    return vfs::rpath_t("/usr/share/voxelius");
 #endif
+
+    // We are building the game for a system
+    // that suspiciously looks like Windows.
+    // In that case we can store things right
+    // smack in the same place as executable.
+    return fs_std::current_path();
 }
 
-// Returns a native system-specific path
-// to a place where the game should write
-// configuration files, screenshots and logs.
-static inline const vfs::rpath_t getWriteRPath()
+static inline const vfs::rpath_t getRPathUser()
 {
-    constexpr static const char *DOT_PATH = ".voxelius";
-    constexpr static const char *NORM_PATH = "voxelius";
-    const vfs::rpath_t fallback = fs_std::current_path() / "rwroot";
-
-    std::string wpath_arg;
-    if(cmdline::get("wpath", wpath_arg)) {
-        // Allow path overriding via cmdline.
-        return vfs::rpath_t(wpath_arg);
-    }
-
-#if defined(BUILD_DEV)
-    // The "rwroot" or fallback directory is present
-    // in the source code tree, so we might like to
-    // use it during development and use it as a
-    // backup solution on release/distribution builds.
-    return fallback;
-#endif
-
-#if defined(_WIN32)
-    if(const char *appdata = std::getenv("APPDATA")) {
-        // For Windows, we write configs, screenshots
-        // and logs to the AppData/Roaming/NORM_PATH.
-        return vfs::rpath_t(appdata) / NORM_PATH;
-    }
-#endif
-
-    if(const char *xdg_home = std::getenv("XDG_DATA_HOME")) {
-        // For UNIX and UNIX-like systems we write configs,
-        // screenshots and logs to ~/DOT_PATH. In case of
-        // whatever XDG-compliant environment, we can yoink
-        // the home path from XDG_DATA_HOME environment variable.
-        // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-        return vfs::rpath_t(xdg_home) / DOT_PATH;
+    std::string userpath_arg;
+    if(cmdline::get("userpath", userpath_arg)) {
+        // Allow setting user path via cmdline.
+        return vfs::rpath_t(userpath_arg);
     }
 
 #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
-    if(const char *homedir = std::getenv("HOME")) {
-        // For UNIX and UNIX-like systems we write configs,
-        // screenshots and logs to ~/DOT_PATH. In case of
-        // whatever POSIX-compliant system, we can yoink
-        // the home path from HOME environment variable.
-        // https://pubs.opengroup.org/onlinepubs/009696899/basedefs/xbd_chap08.html
-        return vfs::rpath_t(homedir) / DOT_PATH;
+    if(const char *xdg_home = std::getenv("XDG_DATA_HOME")) {
+        // We are building the game for an XDG-compliant
+        // system. That means the user's home directory
+        // can be retreived from XDG_DATA_HOME envar.
+        return vfs::rpath_t(xdg_home) / ".voxelius";
+    }
+
+    if(const char *unix_home = std::getenv("HOME")) {
+        // We are building the game for a system that
+        // at least is POSIX-compliant. That means the
+        // user's home directory can be retreived
+        // from HOME environment variable.
+        return vfs::rpath_t(unix_home) / ".voxelius";
     }
 #endif
 
-    return fallback;
+    if(const char *appdata = std::getenv("APPDATA")) {
+        // We are building the game for a system
+        // that suspiciously looks like Windows.
+        // In that case we can use AppData/Roaming.
+        return vfs::rpath_t(appdata) / "voxelius";
+    }
+
+    // We are building the game for a system
+    // that at least has a working C++ compiler.
+    // In that case we just use the same place
+    // as with game subdirectory. What could go wrong?
+    return fs_std::current_path();
 }
 
 int main(int argc, char **argv)
@@ -145,39 +131,36 @@ int main(int argc, char **argv)
         std::terminate();
     }
 
-    const vfs::rpath_t rpath_def = getDefaultRPath();
-    const vfs::rpath_t rpath_rwr = getWriteRPath();
+    const vfs::rpath_t rpath_game = getRPathGame();
+    const vfs::rpath_t rpath_user = getRPathUser();
 
-    spdlog::info("vfs: rpath_def={}", rpath_def.native());
-    spdlog::info("vfs: rpath_rwr={}", rpath_rwr.native());
+    spdlog::info("vfs: setting game path to {}", rpath_game.native());
+    spdlog::info("vfs: setting user path to {}", rpath_user.native());
 
-    fs_std::create_directories(rpath_rwr);
+    fs_std::create_directories(rpath_game);
+    fs_std::create_directories(rpath_user);
 
-    if(!vfs::mount(rpath_def, vfs::getRootPath(), true)) {
-        // Not a death sentence but still kind of bad.
-        spdlog::warn("vfs: unable to mount {}: {}", rpath_def.native(), vfs::getError());
-    }
-
-    if(!vfs::setWritePath(rpath_rwr)) {
-        spdlog::critical("vfs: unable to set write path to {}: {}", rpath_rwr.native(), vfs::getError());
+    if(!vfs::mount(rpath_game, vfs::getRootPath(), false)) {
+        spdlog::critical("vfs: unable to mount {}: {}", rpath_game.native(), vfs::getError());
         std::terminate();
     }
 
-    // UNDONE: at this point we might want to load
-    // a special magic list that should contain all
-    // the possible subdirectories that contain assets.
+    if(!vfs::mount(rpath_user, vfs::getRootPath(), false)) {
+        spdlog::critical("vfs: unable to mount {}: {}", rpath_user.native(), vfs::getError());
+        std::terminate();
+    }
 
-    if(!vfs::mount(rpath_rwr, vfs::getRootPath(), false)) {
-        spdlog::critical("vfs: unable to mount {}: {}", rpath_rwr.native(), vfs::getError());
+    if(!vfs::setWritePath(rpath_user)) {
+        spdlog::critical("vfs: unable to set write path to {}: {}", rpath_user.native(), vfs::getError());
         std::terminate();
     }
 
 #if defined(BUILD_VCL)
-    spdlog::info("running client...");
+    spdlog::info("main: running client...");
     client::main();
 #elif defined(BUILD_VDS)
-    spdlog::info("running dedicated server...");
-    spdlog::error("not implemented!");
+    spdlog::info("main: running dedicated server...");
+    spdlog::error("server: not implemented!");
 #else
 #    error Amogus
 #endif
