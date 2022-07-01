@@ -26,7 +26,6 @@ void screen::init()
 {
     spdlog::debug("screen: taking over framebuffer events");
     glfwSetFramebufferSizeCallback(client_globals::window, &onScreenSize);
-
 }
 
 void screen::initLate()

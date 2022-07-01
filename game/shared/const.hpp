@@ -9,6 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
+#include <common/cxpr.hpp>
+
+constexpr static const std::size_t CHUNK_SIZE = 16;
+constexpr static const std::size_t CHUNK_AREA = CHUNK_SIZE * CHUNK_SIZE;
+constexpr static const std::size_t CHUNK_VOLUME = CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE;
+constexpr static const std::size_t CHUNK_SIZE_LOG2 = cxpr::log2(CHUNK_SIZE);
 
 constexpr static const double PHYS_TICKRATE = 50.0;
 constexpr static const double PHYS_TIMESTEP = 1.0 / PHYS_TICKRATE;

@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
+#include <game/shared/types.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -67,5 +68,69 @@ static inline const reactphysics3d::Vector2 toRP3D(const glm::dvec2 &v)
 static inline const reactphysics3d::Vector3 toRP3D(const glm::dvec3 &v)
 {
     return reactphysics3d::Vector3(v.x, v.y, v.z);
+}
+
+constexpr static inline const chunk_pos_t toChunkPosition(const glm::dvec3 &wpos)
+{
+    return chunk_pos_t {
+        static_cast<chunk_pos_t::value_type>(wpos.x) >> CHUNK_SIZE_LOG2,
+        static_cast<chunk_pos_t::value_type>(wpos.y) >> CHUNK_SIZE_LOG2,
+        static_cast<chunk_pos_t::value_type>(wpos.z) >> CHUNK_SIZE_LOG2
+    };
+}
+
+constexpr static inline const chunk_pos_t toChunkPosition(const voxel_pos_t &vpos)
+{
+    return chunk_pos_t {
+        static_cast<chunk_pos_t::value_type>(vpos.x >> CHUNK_SIZE_LOG2),
+        static_cast<chunk_pos_t::value_type>(vpos.y >> CHUNK_SIZE_LOG2),
+        static_cast<chunk_pos_t::value_type>(vpos.z >> CHUNK_SIZE_LOG2)
+    };
+}
+
+constexpr static inline const local_pos_t toLocalPosition(const voxel_pos_t &vpos)
+{
+    return local_pos_t {
+        glm::abs(static_cast<local_pos_t::value_type>(vpos.x % CHUNK_SIZE)),
+        glm::abs(static_cast<local_pos_t::value_type>(vpos.y % CHUNK_SIZE)),
+        glm::abs(static_cast<local_pos_t::value_type>(vpos.z % CHUNK_SIZE))
+    };
+}
+
+constexpr static inline const local_pos_t toLocalPosition(const voxel_idx_t &index)
+{
+    return local_pos_t {
+        static_cast<local_pos_t::value_type>(index / CHUNK_AREA),
+        static_cast<local_pos_t::value_type>(index % CHUNK_SIZE),
+        static_cast<local_pos_t::value_type>((index / CHUNK_SIZE) % CHUNK_SIZE)
+    };
+}
+
+constexpr static inline const voxel_pos_t toVoxelPosition(const glm::dvec3 &wpos)
+{
+    return voxel_pos_t(wpos.x, wpos.y, wpos.z);
+}
+
+constexpr static inline const voxel_pos_t toVoxelPosition(const chunk_pos_t &cpos, const local_pos_t &lpos)
+{
+    return voxel_pos_t {
+        static_cast<voxel_pos_t::value_type>(lpos.x + (cpos.x << CHUNK_SIZE_LOG2)),
+        static_cast<voxel_pos_t::value_type>(lpos.y + (cpos.y << CHUNK_SIZE_LOG2)),
+        static_cast<voxel_pos_t::value_type>(lpos.z + (cpos.z << CHUNK_SIZE_LOG2))
+    };
+}
+
+constexpr static inline const voxel_idx_t toVoxelIndex(const local_pos_t &lpos)
+{
+    return static_cast<voxel_idx_t>((lpos.x * CHUNK_SIZE + lpos.z) * CHUNK_SIZE + lpos.y);
+}
+
+constexpr static inline const glm::dvec3 toChunkWorldPosition(const chunk_pos_t &cpos)
+{
+    return glm::dvec3 {
+        static_cast<float>(cpos.x << CHUNK_SIZE_LOG2),
+        static_cast<float>(cpos.y << CHUNK_SIZE_LOG2),
+        static_cast<float>(cpos.z << CHUNK_SIZE_LOG2),
+    };
 }
 } // namespace convert
