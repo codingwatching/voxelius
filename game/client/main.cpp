@@ -45,9 +45,6 @@ void client::main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
-    // UNDONE: window resizing
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
     // UNDONE: window dimensions in configs
     client_globals::window = glfwCreateWindow(640, 480, "Client", nullptr, nullptr);
     if(!client_globals::window) {
@@ -76,13 +73,14 @@ void client::main()
 
     client_globals::world = phys_common.createPhysicsWorld();
 
-    client_game::init();
+    Clock<std::chrono::high_resolution_clock> clock;
 
-    client_globals::curtime = 0.0;
+    client_globals::curtime = clock.seconds(clock.now().time_since_epoch());
     client_globals::frametime = 0.0;
     double phys_accum = 0.0;
 
-    Clock<std::chrono::high_resolution_clock> clock;
+    client_game::init();
+    client_game::initLate();
 
     while(!glfwWindowShouldClose(client_globals::window)) {
         client_globals::curtime = clock.seconds(clock.now().time_since_epoch());
