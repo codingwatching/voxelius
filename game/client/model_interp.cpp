@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <game/client/comp/interp.hpp>
-#include <game/client/comp/model.hpp>
+#include <game/client/comp/model_matrix.hpp>
 #include <game/client/globals.hpp>
 #include <game/client/model_interp.hpp>
 #include <game/shared/comp/body.hpp>
@@ -17,7 +17,7 @@
 
 void model_interp::update()
 {
-    const auto group = client_globals::registry.group<comp::Interp>(entt::get<comp::Body, comp::Model>);
+    const auto group = client_globals::registry.group<comp::Interp>(entt::get<comp::Body, comp::ModelMatrix>);
     for(const auto [entity, interp, body, model] : group.each()) {
         const reactphysics3d::Transform &bt = body.body->getTransform();
         const reactphysics3d::Transform nt = bt.interpolateTransforms(interp.transform, bt, client_globals::interpfactor);

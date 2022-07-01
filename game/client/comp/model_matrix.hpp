@@ -14,7 +14,7 @@
 
 namespace comp
 {
-struct Model final {
+struct ModelMatrix final {
     glm::dmat4x4 matrix { glm::identity<glm::dmat4x4>() };
 };
 } // namespace comp

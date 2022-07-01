@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <game/client/comp/interp.hpp>
-#include <game/client/comp/model.hpp>
+#include <game/client/comp/model_matrix.hpp>
 #include <game/client/globals.hpp>
 #include <game/client/model_set.hpp>
 #include <game/shared/comp/body.hpp>
@@ -17,7 +17,7 @@
 
 void model_set::update()
 {
-    const auto group = client_globals::registry.group(entt::get<comp::Body, comp::Model>, entt::exclude<comp::Interp>);
+    const auto group = client_globals::registry.group(entt::get<comp::Body, comp::ModelMatrix>, entt::exclude<comp::Interp>);
     for(const auto [entity, body, model] : group.each()) {
         // This results in a somewhat jittery look.
         body.body->getTransform().getOpenGLMatrix(glm::value_ptr(model.matrix));
