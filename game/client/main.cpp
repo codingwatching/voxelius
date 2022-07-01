@@ -10,6 +10,7 @@
  */
 #include <GLFW/glfw3.h>
 #include <common/clock.hpp>
+#include <common/cmdline.hpp>
 #include <common/cxpr.hpp>
 #include <game/client/game.hpp>
 #include <game/client/globals.hpp>
@@ -56,29 +57,14 @@ void client::main()
         std::terminate();
     }
 
-    Image w_icon_stb;
-    std::vector<GLFWimage> w_images;
-    const int w_icon_dims[] = { 16, 64, 256 };
-    const std::size_t w_dims_count = cxpr::arraySize(w_icon_dims);
-
-    for(std::size_t i = 0; i < w_dims_count; i++) {
-        const int w_dim = w_icon_dims[i];
-        const std::string w_filename = fmt::format("{}x{}.png", w_dim, w_dim);
-
-        if(w_icon_stb.create(vfs::getRootPath() / vfs::vpath_t(w_filename))) {
-            GLFWimage w_image = {};
-            w_image.width = w_icon_stb.getWidth();
-            w_image.height = w_icon_stb.getHeight();
-            w_image.pixels = reinterpret_cast<unsigned char *>(w_icon_stb.data());
-            w_images.push_back(w_image);
-            w_icon_stb.destroy();
-            continue;
-        }
-
-        spdlog::warn("main: unable to load {}: {}", w_filename, vfs::getError());
+    const vfs::vpath_t icon_path = vfs::vpath_t("32x32.png");
+    if(Image icon_image = Image(icon_path, false); icon_image.valid()) {
+        GLFWimage icon = {};
+        icon.width = icon_image.getWidth();
+        icon.height = icon_image.getHeight();
+        icon.pixels = reinterpret_cast<unsigned char *>(icon_image.data());
+        glfwSetWindowIcon(client_globals::window, 1, &icon);
     }
-
-    glfwSetWindowIcon(client_globals::window, static_cast<int>(w_images.size()), w_images.data());
 
     glfwMakeContextCurrent(client_globals::window);
 

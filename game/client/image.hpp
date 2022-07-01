@@ -19,13 +19,13 @@ public:
 
 public:
     Image();
-    Image(const vfs::vpath_t &path);
+    Image(const vfs::vpath_t &path, bool flip = true);
     Image(Image &&rhs);
     virtual ~Image();
     
     Image &operator=(Image &&rhs);
 
-    bool create(const vfs::vpath_t &path);
+    bool create(const vfs::vpath_t &path, bool flip = true);
     void destroy();
     bool valid() const;
 

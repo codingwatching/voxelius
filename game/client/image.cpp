@@ -17,9 +17,10 @@ Image::Image()
 
 }
 
-Image::Image(const vfs::rpath_t &path)
+Image::Image(const vfs::rpath_t &path, bool flip)
+    : width(0), height(0), pixels(nullptr)
 {
-    create(path);
+    create(path, flip);
 }
 
 Image::Image(Image &&rhs)
@@ -44,9 +45,9 @@ Image &Image::operator=(Image &&rhs)
     return *this;
 }
 
-bool Image::create(const vfs::rpath_t &path)
+bool Image::create(const vfs::rpath_t &path, bool flip)
 {
-    stbi_set_flip_vertically_on_load(1);
+    stbi_set_flip_vertically_on_load(flip ? 1 : 0);
 
     destroy();
 
