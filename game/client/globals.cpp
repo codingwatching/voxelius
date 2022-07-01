@@ -12,10 +12,13 @@
 
 // Windowing and events
 GLFWwindow *client_globals::window = nullptr;
-entt::dispatcher client_globals::dispatcher = {};
+entt::dispatcher client_globals::dispatcher;
 
-// Counters
-double client_globals::epoch = 0.0f;
-double client_globals::frametime = 0.0f;
-double client_globals::frametime_avg = 0.0f;
-std::size_t client_globals::frame_count = 0;
+// Entities and physics
+entt::registry client_globals::registry;
+reactphysics3d::PhysicsWorld *client_globals::world = nullptr;
+
+// Timers
+double client_globals::curtime = 0.0;
+double client_globals::frametime = 0.0;
+double client_globals::interpfactor = 0.0;

@@ -5,10 +5,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
+#include <game/client/glxx/object.hpp>
 #include <spdlog/spdlog.h>
 
-namespace gl
+namespace glxx
 {
 struct DrawArraysCmd final {
     GLuint vertices;
@@ -45,23 +45,23 @@ private:
     GLenum type {0};
     std::size_t nv {0};
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::DrawCommand::DrawCommand(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
+inline glxx::DrawCommand::DrawCommand(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
     : indexed(false), mode(mode), type(0), nv(0)
 {
     create();
     set(mode, vertices, instances, base_vertex, base_instance);
 }
 
-inline gl::DrawCommand::DrawCommand(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
+inline glxx::DrawCommand::DrawCommand(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
     : indexed(true), mode(mode), type(type), nv(0)
 {
     create();
     set(mode, type, indices, instances, base_index, base_vertex, base_instance);
 }
 
-inline gl::DrawCommand::DrawCommand(gl::DrawCommand &&rhs)
+inline glxx::DrawCommand::DrawCommand(glxx::DrawCommand &&rhs)
 {
     handle = rhs.handle;
     indexed = rhs.indexed;
@@ -75,9 +75,9 @@ inline gl::DrawCommand::DrawCommand(gl::DrawCommand &&rhs)
     rhs.nv = 0;
 }
 
-inline gl::DrawCommand &gl::DrawCommand::operator=(gl::DrawCommand &&rhs)
+inline glxx::DrawCommand &glxx::DrawCommand::operator=(glxx::DrawCommand &&rhs)
 {
-    gl::DrawCommand copy(std::move(rhs));
+    glxx::DrawCommand copy(std::move(rhs));
     std::swap(handle, copy.handle);
     std::swap(indexed, rhs.indexed);
     std::swap(mode, rhs.mode);
@@ -86,13 +86,13 @@ inline gl::DrawCommand &gl::DrawCommand::operator=(gl::DrawCommand &&rhs)
     return *this;
 }
 
-inline void gl::DrawCommand::create()
+inline void glxx::DrawCommand::create()
 {
     destroy();
     glCreateBuffers(1, &handle);
 }
 
-inline void gl::DrawCommand::destroy()
+inline void glxx::DrawCommand::destroy()
 {
     if(handle) {
         glDeleteBuffers(1, &handle);
@@ -100,12 +100,12 @@ inline void gl::DrawCommand::destroy()
     }
 }
 
-inline void gl::DrawCommand::set(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
+inline void glxx::DrawCommand::set(GLenum mode, std::size_t vertices, std::size_t instances, std::size_t base_vertex, std::size_t base_instance)
 {
     nv = vertices;
     indexed = false;
     this->mode = mode;
-    gl::DrawArraysCmd cmd = {};
+    glxx::DrawArraysCmd cmd = {};
     cmd.vertices = static_cast<GLuint>(vertices);
     cmd.instances = static_cast<GLuint>(instances);
     cmd.base_vertex = static_cast<GLuint>(base_vertex);
@@ -113,13 +113,13 @@ inline void gl::DrawCommand::set(GLenum mode, std::size_t vertices, std::size_t 
     glNamedBufferData(handle, static_cast<GLsizeiptr>(sizeof(cmd)), &cmd, GL_STATIC_DRAW);
 }
 
-inline void gl::DrawCommand::set(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
+inline void glxx::DrawCommand::set(GLenum mode, GLenum type, std::size_t indices, std::size_t instances, std::size_t base_index, std::size_t base_vertex, std::size_t base_instance)
 {
     nv = indices;
     indexed = true;
     this->mode = mode;
     this->type = type;
-    gl::DrawElementsCmd cmd = {};
+    glxx::DrawElementsCmd cmd = {};
     cmd.indices = static_cast<GLuint>(indices);
     cmd.instances = static_cast<GLuint>(instances);
     cmd.base_index = static_cast<GLuint>(base_index);
@@ -128,7 +128,7 @@ inline void gl::DrawCommand::set(GLenum mode, GLenum type, std::size_t indices, 
     glNamedBufferData(handle, static_cast<GLsizeiptr>(sizeof(cmd)), &cmd, GL_STATIC_DRAW);
 }
 
-inline void gl::DrawCommand::invoke() const
+inline void glxx::DrawCommand::invoke() const
 {
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, handle);
     
@@ -140,7 +140,7 @@ inline void gl::DrawCommand::invoke() const
     glDrawArraysIndirect(mode, nullptr);
 }
 
-inline std::size_t gl::DrawCommand::size() const
+inline std::size_t glxx::DrawCommand::size() const
 {
     return nv;
 }

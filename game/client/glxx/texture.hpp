@@ -5,12 +5,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
-#include <game/client/gl/pixel_format.hpp>
+#include <game/client/glxx/object.hpp>
+#include <game/client/glxx/pixel_format.hpp>
 #include <glm/common.hpp>
 #include <common/cxpr.hpp>
 
-namespace gl
+namespace glxx
 {
 class Texture : public Object<Texture> {
 public:
@@ -41,21 +41,21 @@ public:
     bool storage(int width, int height, int layers, PixelFormat format);
     bool write(int layer, int x, int y, int width, int height, PixelFormat format, const void *data);
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::Texture::Texture(GLenum target)
+inline glxx::Texture::Texture(GLenum target)
     : target(target)
 {
 
 }
 
-inline void gl::Texture::create()
+inline void glxx::Texture::create()
 {
     destroy();
     glCreateTextures(target, 1, &handle);
 }
 
-inline void gl::Texture::destroy()
+inline void glxx::Texture::destroy()
 {
     if(handle) {
         glDeleteTextures(1, &handle);
@@ -63,38 +63,38 @@ inline void gl::Texture::destroy()
     }
 }
 
-inline void gl::Texture::genMipmap()
+inline void glxx::Texture::genMipmap()
 {
     glGenerateTextureMipmap(handle);
 }
 
-inline void gl::Texture::bind(GLuint unit) const
+inline void glxx::Texture::bind(GLuint unit) const
 {
     glBindTextureUnit(unit, handle);
 }
 
-inline gl::Texture2D::Texture2D()
-    : gl::Texture(GL_TEXTURE_2D)
+inline glxx::Texture2D::Texture2D()
+    : glxx::Texture(GL_TEXTURE_2D)
 {
 }
 
-inline gl::Texture2D::Texture2D(gl::Texture2D &&rhs)
-    : gl::Texture(GL_TEXTURE_2D)
+inline glxx::Texture2D::Texture2D(glxx::Texture2D &&rhs)
+    : glxx::Texture(GL_TEXTURE_2D)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Texture2D &gl::Texture2D::operator=(gl::Texture2D &&rhs)
+inline glxx::Texture2D &glxx::Texture2D::operator=(glxx::Texture2D &&rhs)
 {
-    gl::Texture2D copy(std::move(rhs));
+    glxx::Texture2D copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline bool gl::Texture2D::storage(int width, int height, gl::PixelFormat format)
+inline bool glxx::Texture2D::storage(int width, int height, glxx::PixelFormat format)
 {
-    if(GLenum f = gl::detail::getPixelFormatGPU(format)) {
+    if(GLenum f = glxx::detail::getPixelFormatGPU(format)) {
         glTextureStorage2D(handle, cxpr::log2<int>(glm::max(width, height)), f, width, height);
         return true;
     }
@@ -102,10 +102,10 @@ inline bool gl::Texture2D::storage(int width, int height, gl::PixelFormat format
     return false;
 }
 
-inline bool gl::Texture2D::write(int x, int y, int width, int height, gl::PixelFormat format, const void *data)
+inline bool glxx::Texture2D::write(int x, int y, int width, int height, glxx::PixelFormat format, const void *data)
 {
     GLenum fmt, type;
-    if(gl::detail::getPixelFormatCPU(format, fmt, type)) {
+    if(glxx::detail::getPixelFormatCPU(format, fmt, type)) {
         glTextureSubImage2D(handle, 0, x, y, width, height, fmt, type, data);
         return true;
     }
@@ -113,28 +113,28 @@ inline bool gl::Texture2D::write(int x, int y, int width, int height, gl::PixelF
     return false;
 }
 
-inline gl::Texture2DArray::Texture2DArray()
-    : gl::Texture(GL_TEXTURE_2D_ARRAY)
+inline glxx::Texture2DArray::Texture2DArray()
+    : glxx::Texture(GL_TEXTURE_2D_ARRAY)
 {
 }
 
-inline gl::Texture2DArray::Texture2DArray(gl::Texture2DArray &&rhs)
-    : gl::Texture(GL_TEXTURE_2D_ARRAY)
+inline glxx::Texture2DArray::Texture2DArray(glxx::Texture2DArray &&rhs)
+    : glxx::Texture(GL_TEXTURE_2D_ARRAY)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Texture2DArray &gl::Texture2DArray::operator=(gl::Texture2DArray &&rhs)
+inline glxx::Texture2DArray &glxx::Texture2DArray::operator=(glxx::Texture2DArray &&rhs)
 {
-    gl::Texture2DArray copy(std::move(rhs));
+    glxx::Texture2DArray copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline bool gl::Texture2DArray::storage(int width, int height, int layers, gl::PixelFormat format)
+inline bool glxx::Texture2DArray::storage(int width, int height, int layers, glxx::PixelFormat format)
 {
-    if(GLenum f = gl::detail::getPixelFormatGPU(format)) {
+    if(GLenum f = glxx::detail::getPixelFormatGPU(format)) {
         glTextureStorage3D(handle, cxpr::log2<int>(glm::max(width, height)), f, width, height, layers);
         return true;
     }
@@ -142,10 +142,10 @@ inline bool gl::Texture2DArray::storage(int width, int height, int layers, gl::P
     return false;
 }
 
-inline bool gl::Texture2DArray::write(int layer, int x, int y, int width, int height, PixelFormat format, const void *data)
+inline bool glxx::Texture2DArray::write(int layer, int x, int y, int width, int height, PixelFormat format, const void *data)
 {
     GLenum fmt, type;
-    if(gl::detail::getPixelFormatCPU(format, fmt, type)) {
+    if(glxx::detail::getPixelFormatCPU(format, fmt, type)) {
         glTextureSubImage3D(handle, 0, x, y, layer, width, height, 1, fmt, type, data);
         return true;
     }

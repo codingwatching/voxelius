@@ -14,7 +14,7 @@
 namespace comp
 {
 struct Body final {
-    // Handle managed by PhysicsCommon
+    // Handle managed by PhysicsWorld
     reactphysics3d::RigidBody *body;
 };
 } // namespace comp

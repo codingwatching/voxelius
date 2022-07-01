@@ -5,12 +5,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
+#include <game/client/glxx/object.hpp>
 #include <string>
 #include <spdlog/spdlog.h>
 #include <vector>
 
-namespace gl
+namespace glxx
 {
 class Shader final : public Object<Shader> {
 public:
@@ -60,9 +60,9 @@ static inline void checkProgramInfoLog(GLuint program)
     }
 }
 } // namespace detail
-} // namespace gl
+} // namespace glxx
 
-inline gl::Shader::Shader(gl::Shader &&rhs)
+inline glxx::Shader::Shader(glxx::Shader &&rhs)
     : bit(rhs.bit)
 {
     handle = rhs.handle;
@@ -70,22 +70,22 @@ inline gl::Shader::Shader(gl::Shader &&rhs)
     rhs.bit = 0;
 }
 
-inline gl::Shader &gl::Shader::operator=(gl::Shader &&rhs)
+inline glxx::Shader &glxx::Shader::operator=(glxx::Shader &&rhs)
 {
-    gl::Shader copy(std::move(rhs));
+    glxx::Shader copy(std::move(rhs));
     std::swap(handle, copy.handle);
     std::swap(bit, copy.bit);
     return *this;
 }
 
-inline void gl::Shader::create()
+inline void glxx::Shader::create()
 {
     destroy();
     handle = glCreateProgram();
     glProgramParameteri(handle, GL_PROGRAM_SEPARABLE, GL_TRUE);
 }
 
-inline void gl::Shader::destroy()
+inline void glxx::Shader::destroy()
 {
     if(handle) {
         glDeleteProgram(handle);
@@ -94,16 +94,16 @@ inline void gl::Shader::destroy()
     }
 }
 
-inline bool gl::Shader::glsl(GLenum stage, const std::string &source)
+inline bool glxx::Shader::glsl(GLenum stage, const std::string &source)
 {
-    if(!bit && (bit = gl::detail::getStageBit(stage))) {
+    if(!bit && (bit = glxx::detail::getStageBit(stage))) {
         GLint status;
         const char *data = source.c_str();
 
         GLuint shader = glCreateShader(stage);
         glShaderSource(shader, 1, &data, nullptr);
         glCompileShader(shader);
-        gl::detail::checkShaderInfoLog(shader);
+        glxx::detail::checkShaderInfoLog(shader);
 
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         if(!status) {
@@ -114,7 +114,7 @@ inline bool gl::Shader::glsl(GLenum stage, const std::string &source)
         glAttachShader(handle, shader);
         glLinkProgram(handle);
         glDeleteShader(shader);
-        gl::detail::checkProgramInfoLog(handle);
+        glxx::detail::checkProgramInfoLog(handle);
 
         glGetProgramiv(handle, GL_LINK_STATUS, &status);
         return !!status;
@@ -123,15 +123,15 @@ inline bool gl::Shader::glsl(GLenum stage, const std::string &source)
     return false;
 }
 
-inline bool gl::Shader::spirv(GLenum stage, const std::vector<uint8_t> &binary)
+inline bool glxx::Shader::spirv(GLenum stage, const std::vector<uint8_t> &binary)
 {
-    if(!bit && (bit = gl::detail::getStageBit(stage))) {
+    if(!bit && (bit = glxx::detail::getStageBit(stage))) {
         GLint status;
 
         GLuint shader = glCreateShader(stage);
         glShaderBinary(1, &shader, GL_SHADER_BINARY_FORMAT_SPIR_V, binary.data(), static_cast<GLsizei>(binary.size()));
         glSpecializeShader(shader, "main", 0, nullptr, nullptr);
-        gl::detail::checkShaderInfoLog(shader);
+        glxx::detail::checkShaderInfoLog(shader);
 
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         if(!status) {
@@ -142,7 +142,7 @@ inline bool gl::Shader::spirv(GLenum stage, const std::vector<uint8_t> &binary)
         glAttachShader(handle, shader);
         glLinkProgram(handle);
         glDeleteShader(shader);
-        gl::detail::checkProgramInfoLog(handle);
+        glxx::detail::checkProgramInfoLog(handle);
 
         glGetProgramiv(handle, GL_LINK_STATUS, &status);
         return !!status;
@@ -151,7 +151,7 @@ inline bool gl::Shader::spirv(GLenum stage, const std::vector<uint8_t> &binary)
     return false;
 }
 
-inline constexpr GLbitfield gl::Shader::stageBit() const
+inline constexpr GLbitfield glxx::Shader::stageBit() const
 {
     return bit;
 }

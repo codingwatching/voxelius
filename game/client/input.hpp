@@ -12,5 +12,5 @@
 
 namespace input
 {
-void initialize();
+void init();
 } // namespace input

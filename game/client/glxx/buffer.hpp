@@ -9,9 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
+#include <game/client/glxx/object.hpp>
 
-namespace gl
+namespace glxx
 {
 class Buffer final : public Object<Buffer> {
 public:
@@ -24,28 +24,28 @@ public:
     void resize(std::size_t new_size, const void *data, GLbitfield usage);
     void write(std::size_t offset, std::size_t size, const void *data);
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::Buffer::Buffer(gl::Buffer &&rhs)
+inline glxx::Buffer::Buffer(glxx::Buffer &&rhs)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Buffer &gl::Buffer::operator=(gl::Buffer &&rhs)
+inline glxx::Buffer &glxx::Buffer::operator=(glxx::Buffer &&rhs)
 {
-    gl::Buffer copy(std::move(rhs));
+    glxx::Buffer copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline void gl::Buffer::create()
+inline void glxx::Buffer::create()
 {
     destroy();
     glCreateBuffers(1, &handle);
 }
 
-inline void gl::Buffer::destroy()
+inline void glxx::Buffer::destroy()
 {
     if(handle) {
         glDeleteBuffers(1, &handle);
@@ -53,17 +53,17 @@ inline void gl::Buffer::destroy()
     }
 }
 
-inline void gl::Buffer::storage(std::size_t size, const void *data, GLbitfield flags)
+inline void glxx::Buffer::storage(std::size_t size, const void *data, GLbitfield flags)
 {
     glNamedBufferStorage(handle, static_cast<GLsizeiptr>(size), data, flags);
 }
 
-inline void gl::Buffer::resize(std::size_t new_size, const void *data, GLbitfield usage)
+inline void glxx::Buffer::resize(std::size_t new_size, const void *data, GLbitfield usage)
 {
     glNamedBufferData(handle, static_cast<GLsizeiptr>(new_size), data, usage);
 }
 
-inline void gl::Buffer::write(std::size_t offset, std::size_t size, const void *data)
+inline void glxx::Buffer::write(std::size_t offset, std::size_t size, const void *data)
 {
     glNamedBufferSubData(handle, static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 }

@@ -12,33 +12,48 @@
 #include <game/client/events/keyboard_key.hpp>
 #include <game/client/game.hpp>
 #include <game/client/globals.hpp>
+#include <game/client/input.hpp>
+#include <game/client/model_interp.hpp>
+#include <game/client/model_set.hpp>
 #include <spdlog/spdlog.h>
 
 static void onKeyboardKey(const events::KeyboardKey &event)
 {
     if(event.act == GLFW_PRESS && event.key == GLFW_KEY_ESCAPE) {
         spdlog::info("ESC has been pressed! Exiting...");
-        glfwSetWindowShouldClose(globals::window, GLFW_TRUE);
+        glfwSetWindowShouldClose(client_globals::window, GLFW_TRUE);
     }
 }
 
-void client_game::initialize()
+void client_game::init()
 {
-    globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
+    input::init();
+
+    client_globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
 }
 
-void client_game::shutdown()
+void client_game::deinit()
 {
+
+}
+
+void client_game::updateFixed()
+{
+
+}
+
+void client_game::updateLate()
+{
+
 }
 
 void client_game::update()
 {
-}
-
-void client_game::lateUpdate()
-{
+    model_interp::update();
+    model_set::update();
 }
 
 void client_game::render()
 {
+
 }

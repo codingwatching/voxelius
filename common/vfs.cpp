@@ -27,12 +27,12 @@ static inline const bool checkPathBit(const std::string &tok)
     return true;
 }
 
-bool vfs::initialize(const std::string &argv_0)
+bool vfs::init(const std::string &argv_0)
 {
     return !!PHYSFS_init(argv_0.c_str());
 }
 
-bool vfs::shutdown()
+bool vfs::deinit()
 {
     return !!PHYSFS_deinit();
 }

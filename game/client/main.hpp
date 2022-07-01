@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Wed Jun 29 2022 19:22:12.
+ * Created: Wed Jun 29 2022 15:35:11.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,8 +10,7 @@
  */
 #pragma once
 
-namespace gl
+namespace client
 {
-void earlyInit();
-void initialize();
-} // namespace gl
+void main();
+} // namespace client

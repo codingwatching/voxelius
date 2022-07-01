@@ -6,7 +6,7 @@
  */
 #pragma once
 
-namespace gl
+namespace glxx
 {
 class Buffer;
 class DrawCommand;
@@ -17,4 +17,4 @@ class Sampler;
 class Shader;
 class Texture;
 class VertexArray;
-} // namespace gl
+} // namespace glxx

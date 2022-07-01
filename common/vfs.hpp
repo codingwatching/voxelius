@@ -28,8 +28,8 @@ constexpr static const openmode_t OPEN_AP = openmode_t(1 << 2);
 
 constexpr static const size_t NPOS = std::numeric_limits<size_t>::max();
 
-bool initialize(const std::string &argv_0);
-bool shutdown();
+bool init(const std::string &argv_0);
+bool deinit();
 
 bool setWritePath(const rpath_t &path);
 bool createDirectories(const vpath_t &path);

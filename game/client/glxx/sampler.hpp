@@ -5,9 +5,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
+#include <game/client/glxx/object.hpp>
 
-namespace gl
+namespace glxx
 {
 class Sampler final : public Object<Sampler> {
 public:
@@ -20,28 +20,28 @@ public:
     void parameter(GLenum pname, GLint value);
     void parameter(GLenum pname, GLfloat value);
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::Sampler::Sampler(gl::Sampler &&rhs)
+inline glxx::Sampler::Sampler(glxx::Sampler &&rhs)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Sampler &gl::Sampler::operator=(gl::Sampler &&rhs)
+inline glxx::Sampler &glxx::Sampler::operator=(glxx::Sampler &&rhs)
 {
-    gl::Sampler copy(std::move(rhs));
+    glxx::Sampler copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline void gl::Sampler::create()
+inline void glxx::Sampler::create()
 {
     destroy();
     glCreateSamplers(1, &handle);
 }
 
-inline void gl::Sampler::destroy()
+inline void glxx::Sampler::destroy()
 {
     if(handle) {
         glDeleteSamplers(1, &handle);
@@ -49,17 +49,17 @@ inline void gl::Sampler::destroy()
     }
 }
 
-inline void gl::Sampler::bind(GLuint unit) const
+inline void glxx::Sampler::bind(GLuint unit) const
 {
     glBindSampler(unit, handle);
 }
 
-inline void gl::Sampler::parameter(GLenum pname, GLint value)
+inline void glxx::Sampler::parameter(GLenum pname, GLint value)
 {
     glSamplerParameteri(handle, pname, value);
 }
 
-inline void gl::Sampler::parameter(GLenum pname, GLfloat value)
+inline void glxx::Sampler::parameter(GLenum pname, GLfloat value)
 {
     glSamplerParameterf(handle, pname, value);
 }

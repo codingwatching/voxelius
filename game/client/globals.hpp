@@ -10,10 +10,11 @@
  */
 #pragma once
 #include <cstddef>
+#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-// Defined in <GLFW/glfw3.h.
 struct GLFWwindow;
+namespace reactphysics3d { class PhysicsWorld; }
 
 namespace client_globals
 {
@@ -21,15 +22,12 @@ namespace client_globals
 extern GLFWwindow *window;
 extern entt::dispatcher dispatcher;
 
-// Counters
-extern double epoch;
-extern double frametime;
-extern double frametime_avg;
-extern std::size_t frame_count;
-} // namespace client_globals
+// Entities and physics
+extern entt::registry registry;
+extern reactphysics3d::PhysicsWorld *world;
 
-// Alias namespaces.
-// This generally protects us from
-// linkage errors (both client and
-// server have a globals namespace).
-namespace globals = client_globals;
+// Miscellaneous
+extern double curtime;
+extern double frametime;
+extern double interpfactor;
+} // namespace client_globals

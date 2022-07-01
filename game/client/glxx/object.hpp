@@ -10,7 +10,7 @@
 #include <glad/gl.h>
 #include <utility>
 
-namespace gl
+namespace glxx
 {
 template<typename object_type>
 class Object : public mixin::NonCopyable {
@@ -25,34 +25,34 @@ public:
 protected:
     GLuint handle {0};
 };
-} // namespace gl
+} // namespace glxx
 
 template<typename object_type>
-inline gl::Object<object_type>::~Object()
+inline glxx::Object<object_type>::~Object()
 {
     destroy();
 }
 
 template<typename object_type>
-inline void gl::Object<object_type>::create()
+inline void glxx::Object<object_type>::create()
 {
     static_cast<object_type *>(this)->create();
 }
 
 template<typename object_type>
-inline void gl::Object<object_type>::destroy()
+inline void glxx::Object<object_type>::destroy()
 {
     static_cast<object_type *>(this)->destroy();
 }
 
 template<typename object_type>
-inline constexpr bool gl::Object<object_type>::valid() const
+inline constexpr bool glxx::Object<object_type>::valid() const
 {
     return handle != 0;
 }
 
 template<typename object_type>
-inline constexpr GLuint gl::Object<object_type>::get() const
+inline constexpr GLuint glxx::Object<object_type>::get() const
 {
     return handle;
 }

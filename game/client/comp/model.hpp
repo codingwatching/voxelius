@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Wed Jun 29 2022 21:55:07.
+ * Created: Fri Jul 01 2022 19:49:43.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,13 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/mat4x4.hpp>
 
-namespace client_game
+namespace comp
 {
-void init();
-void deinit();
-void updateFixed();
-void updateLate();
-void update();
-void render();
-} // namespace client_game
+struct Model final {
+    glm::dmat4x4 matrix { glm::identity<glm::dmat4x4>() };
+};
+} // namespace comp

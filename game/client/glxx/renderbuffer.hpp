@@ -5,10 +5,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/object.hpp>
-#include <game/client/gl/pixel_format.hpp>
+#include <game/client/glxx/object.hpp>
+#include <game/client/glxx/pixel_format.hpp>
 
-namespace gl
+namespace glxx
 {
 class Renderbuffer final : public Object<Renderbuffer> {
 public:
@@ -19,28 +19,28 @@ public:
     void destroy();
     void storage(int width, int height, PixelFormat format);
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::Renderbuffer::Renderbuffer(gl::Renderbuffer &&rhs)
+inline glxx::Renderbuffer::Renderbuffer(glxx::Renderbuffer &&rhs)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Renderbuffer &gl::Renderbuffer::operator=(gl::Renderbuffer &&rhs)
+inline glxx::Renderbuffer &glxx::Renderbuffer::operator=(glxx::Renderbuffer &&rhs)
 {
-    gl::Renderbuffer copy(std::move(rhs));
+    glxx::Renderbuffer copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline void gl::Renderbuffer::create()
+inline void glxx::Renderbuffer::create()
 {
     destroy();
     glCreateRenderbuffers(1, &handle);
 }
 
-inline void gl::Renderbuffer::destroy()
+inline void glxx::Renderbuffer::destroy()
 {
     if(handle) {
         glDeleteRenderbuffers(1, &handle);
@@ -48,7 +48,7 @@ inline void gl::Renderbuffer::destroy()
     }
 }
 
-inline void gl::Renderbuffer::storage(int width, int height, PixelFormat format)
+inline void glxx::Renderbuffer::storage(int width, int height, PixelFormat format)
 {
-    glNamedRenderbufferStorage(handle, gl::detail::getPixelFormatGPU(format), width, height);
+    glNamedRenderbufferStorage(handle, glxx::detail::getPixelFormatGPU(format), width, height);
 }

@@ -5,9 +5,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
-#include <game/client/gl/shader.hpp>
+#include <game/client/glxx/shader.hpp>
 
-namespace gl
+namespace glxx
 {
 class Pipeline : public Object<Pipeline> {
 public:
@@ -19,28 +19,28 @@ public:
     void stage(const Shader &shader);
     void bind() const;
 };
-} // namespace gl
+} // namespace glxx
 
-inline gl::Pipeline::Pipeline(gl::Pipeline &&rhs)
+inline glxx::Pipeline::Pipeline(glxx::Pipeline &&rhs)
 {
     handle = rhs.handle;
     rhs.handle = 0;
 }
 
-inline gl::Pipeline &gl::Pipeline::operator=(gl::Pipeline &&rhs)
+inline glxx::Pipeline &glxx::Pipeline::operator=(glxx::Pipeline &&rhs)
 {
-    gl::Pipeline copy(std::move(rhs));
+    glxx::Pipeline copy(std::move(rhs));
     std::swap(handle, copy.handle);
     return *this;
 }
 
-inline void gl::Pipeline::create()
+inline void glxx::Pipeline::create()
 {
     destroy();
     glCreateProgramPipelines(1, &handle);
 }
 
-inline void gl::Pipeline::destroy()
+inline void glxx::Pipeline::destroy()
 {
     if(handle) {
         glDeleteProgramPipelines(1, &handle);
@@ -48,12 +48,12 @@ inline void gl::Pipeline::destroy()
     }
 }
 
-inline void gl::Pipeline::stage(const gl::Shader &shader)
+inline void glxx::Pipeline::stage(const glxx::Shader &shader)
 {
     glUseProgramStages(handle, shader.stageBit(), shader.get());
 }
 
-inline void gl::Pipeline::bind() const
+inline void glxx::Pipeline::bind() const
 {
     glBindProgramPipeline(handle);
 }

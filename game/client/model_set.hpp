@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Wed Jun 29 2022 21:55:07.
+ * Created: Fri Jul 01 2022 20:00:52.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,12 +10,7 @@
  */
 #pragma once
 
-namespace client_game
+namespace model_set
 {
-void init();
-void deinit();
-void updateFixed();
-void updateLate();
 void update();
-void render();
-} // namespace client_game
+} // namespace model_set

@@ -10,7 +10,7 @@
  */
 #include <common/cmdline.hpp>
 #include <common/vfs.hpp>
-#include <game/client/client.hpp>
+#include <game/client/main.hpp>
 #include <iostream>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
@@ -140,8 +140,8 @@ int main(int argc, char **argv)
         spdlog::info("spdlog: set_level(debug)");
     }
 
-    if(!vfs::initialize(argv[0])) {
-        spdlog::critical("vfs: initialize failed: {}", vfs::getError());
+    if(!vfs::init(argv[0])) {
+        spdlog::critical("vfs: init failed: {}", vfs::getError());
         std::terminate();
     }
 
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 
 #if defined(BUILD_VCL)
     spdlog::info("running client...");
-    client::run();
+    client::main();
 #elif defined(BUILD_VDS)
     spdlog::info("running dedicated server...");
     spdlog::error("not implemented!");
@@ -182,9 +182,9 @@ int main(int argc, char **argv)
 #    error Amogus
 #endif
 
-    if(!vfs::shutdown()) {
-        // Improper shutdown is not a death sentence.
-        spdlog::warn("vfs: shutdown failed: {}", vfs::getError());
+    if(!vfs::deinit()) {
+        // Improper deinit is not a death sentence.
+        spdlog::warn("vfs: deinit failed: {}", vfs::getError());
     }
 
     return 0;

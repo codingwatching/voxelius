@@ -26,7 +26,7 @@ static void onCursorMove(GLFWwindow *window, double xpos, double ypos)
     event.ypos = ypos;
     event.dx = xpos - last_xpos;
     event.dy = ypos - last_ypos;
-    globals::dispatcher.trigger(event);
+    client_globals::dispatcher.trigger(event);
 
     // Store previous positions
     last_xpos = xpos;
@@ -39,7 +39,7 @@ static void onKeyboardKey(GLFWwindow *window, int key, int scn, int act, int mod
     event.act = static_cast<unsigned int>(act);
     event.key = static_cast<unsigned int>(key);
     event.mod = static_cast<unsigned int>(mod);
-    globals::dispatcher.trigger(event);
+    client_globals::dispatcher.trigger(event);
 }
 
 static void onMouseButton(GLFWwindow *window, int btn, int act, int mod)
@@ -48,7 +48,7 @@ static void onMouseButton(GLFWwindow *window, int btn, int act, int mod)
     event.act = static_cast<unsigned int>(act);
     event.btn = static_cast<unsigned int>(btn);
     event.mod = static_cast<unsigned int>(mod);
-    globals::dispatcher.trigger(event);
+    client_globals::dispatcher.trigger(event);
 }
 
 static void onMouseScroll(GLFWwindow *window, double dx, double dy)
@@ -56,14 +56,14 @@ static void onMouseScroll(GLFWwindow *window, double dx, double dy)
     events::MouseScroll event = {};
     event.dx = dx;
     event.dy = dy;
-    globals::dispatcher.trigger(event);
+    client_globals::dispatcher.trigger(event);
 }
 
-void input::initialize()
+void input::init()
 {
     spdlog::debug("input: taking over window input events.");
-    glfwSetCursorPosCallback(globals::window, &onCursorMove);
-    glfwSetKeyCallback(globals::window, &onKeyboardKey);
-    glfwSetMouseButtonCallback(globals::window, &onMouseButton);
-    glfwSetScrollCallback(globals::window, &onMouseScroll);
+    glfwSetCursorPosCallback(client_globals::window, &onCursorMove);
+    glfwSetKeyCallback(client_globals::window, &onKeyboardKey);
+    glfwSetMouseButtonCallback(client_globals::window, &onMouseButton);
+    glfwSetScrollCallback(client_globals::window, &onMouseScroll);
 }
