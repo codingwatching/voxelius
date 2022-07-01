@@ -10,7 +10,7 @@
                 "${workspaceFolder}/external/glfw/include",
                 "${workspaceFolder}/external/glm",
                 //"${workspaceFolder}/external/imgui",
-                "${workspaceFolder}/external/physfs/include",
+                "${workspaceFolder}/external/physfs/src",
                 "${workspaceFolder}/external/reactphysics3d/include",
                 "${workspaceFolder}/external/spdlog/include",
                 //"${workspaceFolder}/external/stb",

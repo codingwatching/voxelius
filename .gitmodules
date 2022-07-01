@@ -4,9 +4,6 @@
 [submodule "external/entt"]
 	path = external/entt
 	url = https://github.com/skypjack/entt.git
-[submodule "external/physfs"]
-	path = external/physfs
-	url = https://github.com/voxelius/physfs.git
 [submodule "external/glfw"]
 	path = external/glfw
 	url = https://github.com/glfw/glfw.git
@@ -16,3 +13,6 @@
 [submodule "external/glm"]
 	path = external/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "external/physfs"]
+	path = external/physfs
+	url = https://github.com/icculus/physfs.git
