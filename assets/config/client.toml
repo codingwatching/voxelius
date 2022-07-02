@@ -1,0 +1,11 @@
+[window]
+width = 640
+height = 480
+resize = false
+fullscreen = false
+vsync = false
+max_fps = 120
+
+[graphics]
+atlas_width = 64
+atlas_height = 64

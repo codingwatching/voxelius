@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Fri Jul 01 2022 19:50:08.
+ * Created: Sat Jul 02 2022 18:18:44.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -13,7 +13,8 @@
 
 namespace comp
 {
-struct Interp final {
-    reactphysics3d::Transform transform;
+struct InterpTransform final {
+    reactphysics3d::Transform prev;
+    reactphysics3d::Transform interp;
 };
 } // namespace comp

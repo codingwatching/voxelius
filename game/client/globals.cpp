@@ -8,17 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include <game/client/atlas.hpp>
 #include <game/client/globals.hpp>
 
-// Windowing and events
+Atlas client_globals::atlas;
 GLFWwindow *client_globals::window = nullptr;
-entt::dispatcher client_globals::dispatcher;
-
-// Entities and physics
-entt::registry client_globals::registry;
+entt::entity client_globals::local_player = entt::null;
 reactphysics3d::PhysicsWorld *client_globals::world = nullptr;
-
-// Timers
 double client_globals::curtime = 0.0;
 double client_globals::frametime = 0.0;
-double client_globals::interpfactor = 0.0;
+double client_globals::phys_interpfactor = 0.0;

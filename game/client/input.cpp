@@ -15,6 +15,7 @@
 #include <game/client/events/mouse_scroll.hpp>
 #include <game/client/globals.hpp>
 #include <game/client/input.hpp>
+#include <game/shared/globals.hpp>
 #include <spdlog/spdlog.h>
 
 static double last_xpos = 0.0f;
@@ -26,7 +27,7 @@ static void onCursorMove(GLFWwindow *window, double xpos, double ypos)
     event.ypos = ypos;
     event.dx = xpos - last_xpos;
     event.dy = ypos - last_ypos;
-    client_globals::dispatcher.trigger(event);
+    shared_globals::dispatcher.trigger(event);
 
     // Store previous positions
     last_xpos = xpos;
@@ -39,7 +40,7 @@ static void onKeyboardKey(GLFWwindow *window, int key, int scn, int act, int mod
     event.act = static_cast<unsigned int>(act);
     event.key = static_cast<unsigned int>(key);
     event.mod = static_cast<unsigned int>(mod);
-    client_globals::dispatcher.trigger(event);
+    shared_globals::dispatcher.trigger(event);
 }
 
 static void onMouseButton(GLFWwindow *window, int btn, int act, int mod)
@@ -48,7 +49,7 @@ static void onMouseButton(GLFWwindow *window, int btn, int act, int mod)
     event.act = static_cast<unsigned int>(act);
     event.btn = static_cast<unsigned int>(btn);
     event.mod = static_cast<unsigned int>(mod);
-    client_globals::dispatcher.trigger(event);
+    shared_globals::dispatcher.trigger(event);
 }
 
 static void onMouseScroll(GLFWwindow *window, double dx, double dy)
@@ -56,7 +57,7 @@ static void onMouseScroll(GLFWwindow *window, double dx, double dy)
     events::MouseScroll event = {};
     event.dx = dx;
     event.dy = dy;
-    client_globals::dispatcher.trigger(event);
+    shared_globals::dispatcher.trigger(event);
 }
 
 void input::init()

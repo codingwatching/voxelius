@@ -12,6 +12,7 @@
 #include <game/client/events/screen_size.hpp>
 #include <game/client/globals.hpp>
 #include <game/client/screen.hpp>
+#include <game/shared/globals.hpp>
 #include <spdlog/spdlog.h>
 
 static void onScreenSize(GLFWwindow *window, int width, int height)
@@ -19,7 +20,7 @@ static void onScreenSize(GLFWwindow *window, int width, int height)
     events::ScreenSize event = {};
     event.width = width;
     event.height = height;
-    client_globals::dispatcher.trigger(event);
+    shared_globals::dispatcher.trigger(event);
 }
 
 void screen::init()

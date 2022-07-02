@@ -3,13 +3,10 @@
         {
             "name": "default",
             "includePath": [
-                //"${workspaceFolder}/external/bitsery/include",
-                //"${workspaceFolder}/external/enet/include",
                 "${workspaceFolder}/external/entt/src",
                 "${workspaceFolder}/external/glad/include",
                 "${workspaceFolder}/external/glfw/include",
                 "${workspaceFolder}/external/glm",
-                //"${workspaceFolder}/external/imgui",
                 "${workspaceFolder}/external/physfs/src",
                 "${workspaceFolder}/external/reactphysics3d/include",
                 "${workspaceFolder}/external/spdlog/include",

@@ -10,24 +10,19 @@
  */
 #pragma once
 #include <cstddef>
-#include <entt/entity/registry.hpp>
-#include <entt/signal/dispatcher.hpp>
+#include <entt/entity/entity.hpp>
+#include <reactphysics3d/engine/PhysicsWorld.h>
 
+class Atlas;
 struct GLFWwindow;
-namespace reactphysics3d { class PhysicsWorld; }
 
 namespace client_globals
 {
-// Windowing and events
+extern Atlas atlas;
 extern GLFWwindow *window;
-extern entt::dispatcher dispatcher;
-
-// Entities and physics
-extern entt::registry registry;
+extern entt::entity local_player;
 extern reactphysics3d::PhysicsWorld *world;
-
-// Miscellaneous
 extern double curtime;
 extern double frametime;
-extern double interpfactor;
+extern double phys_interpfactor;
 } // namespace client_globals

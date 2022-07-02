@@ -8,10 +8,11 @@
 ## License, v. 2.0. If a copy of the MPL was not distributed with this
 ## file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#add_library(shared STATIC "")
-#target_include_directories(shared PUBLIC "${CMAKE_SOURCE_DIR}")
-#target_link_libraries(shared PUBLIC EnTT common reactphysics3d)
+add_library(shared STATIC "")
+target_include_directories(shared PUBLIC "${CMAKE_SOURCE_DIR}")
+target_link_libraries(shared PUBLIC common EnTT  reactphysics3d)
 
-#set(SOURCES)
-
-#target_sources(shared PRIVATE ${SOURCES})
+set(SOURCES)
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/chunks.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/globals.cpp")
+target_sources(shared PRIVATE ${SOURCES})

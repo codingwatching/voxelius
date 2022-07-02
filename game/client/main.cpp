@@ -17,6 +17,7 @@
 #include <game/client/image.hpp>
 #include <game/client/main.hpp>
 #include <game/shared/const.hpp>
+#include <game/shared/globals.hpp>
 #include <glad/gl.h>
 #include <reactphysics3d/engine/PhysicsCommon.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
@@ -109,7 +110,7 @@ void client::main()
 
         // The game can decide whether
         // to interpolate physics objects or not.
-        client_globals::interpfactor = phys_accum / client_globals::frametime;
+        client_globals::phys_interpfactor = phys_accum / client_globals::frametime;
 
         client_game::update();
 
@@ -131,7 +132,7 @@ void client::main()
         // It looks like a good idea to be sure
         // that we dispatch everything that just
         // happens to exist in the event queue.
-        client_globals::dispatcher.update();
+        shared_globals::dispatcher.update();
     }
 
     client_game::deinit();
@@ -144,7 +145,7 @@ void client::main()
     // Otherwise, GLXX object destructors will be
     // called when there is no OpenGL context anymore,
     // resulting in a nasty segmentation fault.
-    client_globals::registry.clear();
+    shared_globals::registry.clear();
 
     glfwDestroyWindow(client_globals::window);
 

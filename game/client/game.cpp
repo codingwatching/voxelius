@@ -14,9 +14,11 @@
 #include <game/client/game.hpp>
 #include <game/client/globals.hpp>
 #include <game/client/input.hpp>
-#include <game/client/model_interp.hpp>
 #include <game/client/model_set.hpp>
+#include <game/client/phys_interp.hpp>
+#include <game/client/player_move.hpp>
 #include <game/client/screen.hpp>
+#include <game/shared/globals.hpp>
 #include <spdlog/spdlog.h>
 
 static void onKeyboardKey(const events::KeyboardKey &event)
@@ -37,8 +39,8 @@ void client_game::init()
     input::init();
     screen::init();
 
-    client_globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
-    client_globals::dispatcher.sink<events::ScreenSize>().connect<&onScreenSize>();
+    shared_globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
+    shared_globals::dispatcher.sink<events::ScreenSize>().connect<&onScreenSize>();
 }
 
 void client_game::initLate()
@@ -54,7 +56,8 @@ void client_game::deinit()
 
 void client_game::update()
 {
-    model_interp::update();
+    player_move::update();
+    phys_interp::update();
     model_set::update();
 }
 

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Sat Jul 02 2022 18:53:10.
+ * Created: Sun Jul 03 2022 00:56:33.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,8 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
+#include <game/shared/chunks.hpp>
 
-namespace model_set
+namespace events
 {
-void update();
-} // namespace model_set
+struct VoxelSet final {
+    chunk_pos_t cpos;
+    local_pos_t lpos;
+    voxel_idx_t index;
+    SharedChunk *chunk;
+    voxel_t voxel;
+};
+} // namespace events

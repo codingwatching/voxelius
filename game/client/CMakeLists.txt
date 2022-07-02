@@ -11,12 +11,7 @@
 add_library(client STATIC "")
 target_compile_definitions(client PUBLIC GLFW_INCLUDE_NONE)
 target_include_directories(client PUBLIC "${CMAKE_SOURCE_DIR}")
-target_link_libraries(client PUBLIC common glad glfw stb)
-
-## FIXME: technically speaking, the "shared"
-## library should depend on those, and in turn,
-## we should depend on the "shared" library.
-target_link_libraries(client PUBLIC EnTT reactphysics3d)
+target_link_libraries(client PUBLIC common shared glad glfw stb)
 
 set(SOURCES)
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/game.cpp")
@@ -26,8 +21,10 @@ list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/main.cpp")
 target_sources(client PRIVATE ${SOURCES})
 
 set(SOURCES)
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/atlas.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/input.cpp")
-list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/model_interp.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/model_set.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/phys_interp.cpp")
+list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/player_move.cpp")
 list(APPEND SOURCES "${CMAKE_CURRENT_LIST_DIR}/screen.cpp")
 target_sources(client PRIVATE ${SOURCES})

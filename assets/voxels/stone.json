@@ -1,0 +1,16 @@
+{
+    "orient": [ "north" ],
+    "collide": { "type": "cube" },
+    "render": {
+        "type": "cube",
+        "textures": {
+            "all": [ "stone_a.png", "stone_b.png" ],
+            "north": "$all",
+            "south": "$all",
+            "west": "$all",
+            "east": "$all",
+            "top": "$all",
+            "bottom": "$all"
+        }
+    }
+}

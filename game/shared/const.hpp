@@ -10,6 +10,11 @@
  */
 #pragma once
 #include <common/cxpr.hpp>
+#include <glm/vec3.hpp>
+
+constexpr static const glm::dvec3 DIR_FORWARD = glm::dvec3(0.0, 0.0, -1.0);
+constexpr static const glm::dvec3 DIR_RIGHT = glm::dvec3(1.0, 0.0, 0.0);
+constexpr static const glm::dvec3 DIR_UP = glm::dvec3(0.0, 1.0, 0.0);
 
 constexpr static const std::size_t CHUNK_SIZE = 16;
 constexpr static const std::size_t CHUNK_AREA = CHUNK_SIZE * CHUNK_SIZE;

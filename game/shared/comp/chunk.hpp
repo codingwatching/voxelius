@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
  * Copyright (c), 2022, Voxelius Team.
- * Created: Fri Jul 01 2022 19:53:49.
+ * Created: Sat Jul 02 2022 15:55:42.
  * Author: Kirill GPRB.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,8 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #pragma once
+#include <game/shared/types.hpp>
 
-namespace model_interp
+namespace comp
 {
-void update();
-} // namespace model_interp
+struct Chunk final {
+    chunk_pos_t position;
+};
+} // namespace comp
