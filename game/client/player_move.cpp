@@ -66,7 +66,7 @@ void player_move::init()
 
 void player_move::update()
 {
-    if(mv_updated && globals::local_player != entt::null) {
+    if(mv_updated && globals::registry.valid(globals::local_player)) {
         comp::Body &body = globals::registry.get<comp::Body>(globals::local_player);
         const reactphysics3d::Transform &bt = body.body->getTransform();
         const glm::dquat orient = convert::toGLM(bt.getOrientation());

@@ -46,6 +46,9 @@ void chunks::remove(const chunk_pos_t &cpos)
     }
 }
 
+// FIXME: should it be renamed to findOrCreate?
+// Because it does the exact thing findOrCreate
+// would do...
 SharedChunk *chunks::create(const chunk_pos_t &cpos)
 {
     const auto it = chunks_map.find(cpos);

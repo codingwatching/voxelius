@@ -128,9 +128,9 @@ constexpr static inline const voxel_idx_t toVoxelIndex(const local_pos_t &lpos)
 constexpr static inline const glm::dvec3 toChunkWorldPosition(const chunk_pos_t &cpos)
 {
     return glm::dvec3 {
-        static_cast<float>(cpos.x << CHUNK_SIZE_LOG2),
-        static_cast<float>(cpos.y << CHUNK_SIZE_LOG2),
-        static_cast<float>(cpos.z << CHUNK_SIZE_LOG2),
+        static_cast<double>(cpos.x << CHUNK_SIZE_LOG2),
+        static_cast<double>(cpos.y << CHUNK_SIZE_LOG2),
+        static_cast<double>(cpos.z << CHUNK_SIZE_LOG2),
     };
 }
 } // namespace convert
