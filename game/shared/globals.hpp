@@ -12,8 +12,8 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-namespace shared_globals
+namespace globals
 {
 extern entt::dispatcher dispatcher;
 extern entt::registry registry;
-} // namespace shared_globals
+} // namespace globals

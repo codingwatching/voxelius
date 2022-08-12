@@ -25,7 +25,7 @@ static void onKeyboardKey(const events::KeyboardKey &event)
 {
     if(event.act == GLFW_PRESS && event.key == GLFW_KEY_ESCAPE) {
         spdlog::info("escape has been pressed! exiting...");
-        glfwSetWindowShouldClose(client_globals::window, GLFW_TRUE);
+        glfwSetWindowShouldClose(globals::window, GLFW_TRUE);
     }
 }
 
@@ -39,8 +39,8 @@ void client_game::init()
     input::init();
     screen::init();
 
-    shared_globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
-    shared_globals::dispatcher.sink<events::ScreenSize>().connect<&onScreenSize>();
+    globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
+    globals::dispatcher.sink<events::ScreenSize>().connect<&onScreenSize>();
 }
 
 void client_game::initLate()

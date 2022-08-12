@@ -26,8 +26,8 @@ void chunks::clear()
         events::ChunkDestroy event = {};
         event.cpos = it->first;
         event.chunk = &it->second;
-        shared_globals::dispatcher.trigger(event);
-        shared_globals::registry.destroy(it->second.entity);
+        globals::dispatcher.trigger(event);
+        globals::registry.destroy(it->second.entity);
     }
 
     chunks_map.clear();
@@ -40,8 +40,8 @@ void chunks::remove(const chunk_pos_t &cpos)
         events::ChunkDestroy event = {};
         event.cpos = it->first;
         event.chunk = &it->second;
-        shared_globals::dispatcher.trigger(event);
-        shared_globals::registry.destroy(it->second.entity);
+        globals::dispatcher.trigger(event);
+        globals::registry.destroy(it->second.entity);
         chunks_map.erase(it);
     }
 }
@@ -52,17 +52,17 @@ SharedChunk *chunks::create(const chunk_pos_t &cpos)
     if(it == chunks_map.cend()) {
         SharedChunk &chunk = (chunks_map[cpos] = SharedChunk());
         chunk.chunk.fill(NULL_VOXEL);
-        chunk.entity = shared_globals::registry.create();
+        chunk.entity = globals::registry.create();
         chunk.client = nullptr;
         chunk.server = nullptr;
 
-        comp::Chunk &cc = shared_globals::registry.emplace<comp::Chunk>(chunk.entity);
+        comp::Chunk &cc = globals::registry.emplace<comp::Chunk>(chunk.entity);
         cc.position = cpos;
 
         events::ChunkCreate event = {};
         event.cpos = cpos;
         event.chunk = &chunk;
-        shared_globals::dispatcher.trigger(event);
+        globals::dispatcher.trigger(event);
 
         return &chunk;
     }
@@ -101,7 +101,7 @@ bool chunks::set(const voxel_pos_t &vpos, voxel_t voxel, bool force)
         event.chunk = chunk;
         event.voxel = voxel;
         chunk->chunk.at(event.index) = voxel;
-        shared_globals::dispatcher.trigger(event);
+        globals::dispatcher.trigger(event);
         return true;
     }
 

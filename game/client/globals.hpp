@@ -16,7 +16,7 @@
 class Atlas;
 struct GLFWwindow;
 
-namespace client_globals
+namespace globals
 {
 extern Atlas atlas;
 extern GLFWwindow *window;
@@ -25,4 +25,4 @@ extern reactphysics3d::PhysicsWorld *world;
 extern double curtime;
 extern double frametime;
 extern double phys_interpfactor;
-} // namespace client_globals
+} // namespace globals

@@ -10,5 +10,5 @@
  */
 #include <game/shared/globals.hpp>
 
-entt::dispatcher shared_globals::dispatcher;
-entt::registry shared_globals::registry;
+entt::dispatcher globals::dispatcher;
+entt::registry globals::registry;

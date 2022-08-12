@@ -52,8 +52,8 @@ void client::main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
     // UNDONE: window dimensions in configs
-    client_globals::window = glfwCreateWindow(640, 480, "Client", nullptr, nullptr);
-    if(!client_globals::window) {
+    globals::window = glfwCreateWindow(640, 480, "Client", nullptr, nullptr);
+    if(!globals::window) {
         spdlog::critical("glfw: unable to open a window");
         std::terminate();
     }
@@ -64,10 +64,10 @@ void client::main()
         icon.width = icon_image.getWidth();
         icon.height = icon_image.getHeight();
         icon.pixels = reinterpret_cast<unsigned char *>(icon_image.data());
-        glfwSetWindowIcon(client_globals::window, 1, &icon);
+        glfwSetWindowIcon(globals::window, 1, &icon);
     }
 
-    glfwMakeContextCurrent(client_globals::window);
+    glfwMakeContextCurrent(globals::window);
 
     // UNDONE: vsync in configs
     glfwSwapInterval(1);
@@ -86,31 +86,37 @@ void client::main()
     const GLuint ignore_nvidia_131185 = 131185;
     glDebugMessageControl(GL_DEBUG_SOURCE_API, GL_DEBUG_TYPE_OTHER, GL_DONT_CARE, 1, &ignore_nvidia_131185, GL_FALSE);
 
-    client_globals::world = phys_common.createPhysicsWorld();
+    // Print some information on the GPU
+    // UNDONE: ask Windows for a discrete accelerator...
+    spdlog::info("GLSL version: {}", reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+    spdlog::info("OpenGL version: {}", reinterpret_cast<const char *>(glGetString(GL_VERSION)));
+    spdlog::info("OpenGL renderer: {}", reinterpret_cast<const char *>(glGetString(GL_RENDERER)));
+
+    globals::world = phys_common.createPhysicsWorld();
 
     Clock<std::chrono::high_resolution_clock> clock;
 
-    client_globals::curtime = clock.seconds(clock.now().time_since_epoch());
-    client_globals::frametime = 0.0;
+    globals::curtime = clock.seconds(clock.now().time_since_epoch());
+    globals::frametime = 0.0;
     double phys_accum = 0.0;
 
     client_game::init();
     client_game::initLate();
 
-    while(!glfwWindowShouldClose(client_globals::window)) {
-        client_globals::curtime = clock.seconds(clock.now().time_since_epoch());
-        client_globals::frametime = clock.seconds(clock.reset());
+    while(!glfwWindowShouldClose(globals::window)) {
+        globals::curtime = clock.seconds(clock.now().time_since_epoch());
+        globals::frametime = clock.seconds(clock.reset());
 
-        phys_accum += client_globals::frametime;
+        phys_accum += globals::frametime;
         while(phys_accum >= PHYS_TIMESTEP) {
             client_game::updateFixed();
-            client_globals::world->update(PHYS_TIMESTEP);
+            globals::world->update(PHYS_TIMESTEP);
             phys_accum -= PHYS_TIMESTEP;
         }
 
         // The game can decide whether
         // to interpolate physics objects or not.
-        client_globals::phys_interpfactor = phys_accum / client_globals::frametime;
+        globals::phys_interpfactor = phys_accum / globals::frametime;
 
         client_game::update();
 
@@ -123,7 +129,7 @@ void client::main()
 
         client_game::render();
 
-        glfwSwapBuffers(client_globals::window);
+        glfwSwapBuffers(globals::window);
 
         client_game::updateLate();
 
@@ -132,12 +138,12 @@ void client::main()
         // It looks like a good idea to be sure
         // that we dispatch everything that just
         // happens to exist in the event queue.
-        shared_globals::dispatcher.update();
+        globals::dispatcher.update();
     }
 
     client_game::deinit();
 
-    phys_common.destroyPhysicsWorld(client_globals::world);
+    phys_common.destroyPhysicsWorld(globals::world);
 
     // We are going to destroy the OpenGL context
     // so we have to make sure there is no GLXX
@@ -145,9 +151,9 @@ void client::main()
     // Otherwise, GLXX object destructors will be
     // called when there is no OpenGL context anymore,
     // resulting in a nasty segmentation fault.
-    shared_globals::registry.clear();
+    globals::registry.clear();
 
-    glfwDestroyWindow(client_globals::window);
+    glfwDestroyWindow(globals::window);
 
     glfwTerminate();
 }

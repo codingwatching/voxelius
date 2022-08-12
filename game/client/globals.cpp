@@ -11,10 +11,10 @@
 #include <game/client/atlas.hpp>
 #include <game/client/globals.hpp>
 
-Atlas client_globals::atlas;
-GLFWwindow *client_globals::window = nullptr;
-entt::entity client_globals::local_player = entt::null;
-reactphysics3d::PhysicsWorld *client_globals::world = nullptr;
-double client_globals::curtime = 0.0;
-double client_globals::frametime = 0.0;
-double client_globals::phys_interpfactor = 0.0;
+Atlas globals::atlas;
+GLFWwindow *globals::window = nullptr;
+entt::entity globals::local_player = entt::null;
+reactphysics3d::PhysicsWorld *globals::world = nullptr;
+double globals::curtime = 0.0;
+double globals::frametime = 0.0;
+double globals::phys_interpfactor = 0.0;

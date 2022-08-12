@@ -61,13 +61,13 @@ void player_move::init()
 {
     mv_updated = false;
     mv_keys = 0;
-    shared_globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
+    globals::dispatcher.sink<events::KeyboardKey>().connect<&onKeyboardKey>();
 }
 
 void player_move::update()
 {
-    if(mv_updated && client_globals::local_player != entt::null) {
-        comp::Body &body = shared_globals::registry.get<comp::Body>(client_globals::local_player);
+    if(mv_updated && globals::local_player != entt::null) {
+        comp::Body &body = globals::registry.get<comp::Body>(globals::local_player);
         const reactphysics3d::Transform &bt = body.body->getTransform();
         const glm::dquat orient = convert::toGLM(bt.getOrientation());
 

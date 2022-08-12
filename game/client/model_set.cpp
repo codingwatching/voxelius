@@ -17,10 +17,10 @@
 
 void model_set::update()
 {
-    const auto group = shared_globals::registry.group<comp::ModelMatrix>(entt::get<comp::Body>);
+    const auto group = globals::registry.group<comp::ModelMatrix>(entt::get<comp::Body>);
     for(const auto [entity, model, body] : group.each()) {
         const reactphysics3d::Transform *tr = nullptr;
-        if(const auto *interp = shared_globals::registry.try_get<comp::InterpTransform>(entity))
+        if(const auto *interp = globals::registry.try_get<comp::InterpTransform>(entity))
             tr = &interp->interp;
         else
             tr = &body.body->getTransform();

@@ -16,8 +16,8 @@
 
 void phys_interp::update()
 {
-    const double factor = client_globals::phys_interpfactor;
-    const auto group = shared_globals::registry.group<comp::InterpTransform>(entt::get<comp::Body>);
+    const double factor = globals::phys_interpfactor;
+    const auto group = globals::registry.group<comp::InterpTransform>(entt::get<comp::Body>);
     for(const auto [entity, interp, body] : group.each()) {
         const reactphysics3d::Transform &bt = body.body->getTransform();
         const reactphysics3d::Transform &pt = interp.prev;
