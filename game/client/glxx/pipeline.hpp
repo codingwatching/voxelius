@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef FF5205F0_4FB9_459E_8512_47E9AB32304F
+#define FF5205F0_4FB9_459E_8512_47E9AB32304F
 #include <game/client/glxx/shader.hpp>
 
 namespace glxx
@@ -57,3 +59,6 @@ inline void glxx::Pipeline::bind() const
 {
     glBindProgramPipeline(handle);
 }
+
+
+#endif /* FF5205F0_4FB9_459E_8512_47E9AB32304F */

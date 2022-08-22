@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Tue Jun 28 2022 00:42:40.
  * Author: Kirill GPRB.
  *
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef C38A4868_BC2E_4EA4_B3E2_96789EF50921
+#define C38A4868_BC2E_4EA4_B3E2_96789EF50921
 #include <string>
 
 namespace cmdline
@@ -20,3 +21,6 @@ void append(int argc, char **argv);
 bool exists(const std::string &opt);
 bool get(const std::string &opt, std::string &out_arg);
 } // namespace cmdline
+
+
+#endif /* C38A4868_BC2E_4EA4_B3E2_96789EF50921 */

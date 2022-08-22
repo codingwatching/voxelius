@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef E7A03B69_CB3F_461D_9AEE_494C746DEEE4
+#define E7A03B69_CB3F_461D_9AEE_494C746DEEE4
 #include <game/client/glxx/object.hpp>
 #include <game/client/glxx/pixel_format.hpp>
 #include <glm/common.hpp>
@@ -152,3 +154,6 @@ inline bool glxx::Texture2DArray::write(int layer, int x, int y, int width, int 
 
     return false;
 }
+
+
+#endif /* E7A03B69_CB3F_461D_9AEE_494C746DEEE4 */

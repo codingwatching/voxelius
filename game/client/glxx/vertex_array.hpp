@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef F07D2DDF_2D70_4BFD_A4F5_A62DB7CDB6D7
+#define F07D2DDF_2D70_4BFD_A4F5_A62DB7CDB6D7
 #include <game/client/glxx/buffer.hpp>
 #include <spdlog/spdlog.h>
 
@@ -98,3 +100,6 @@ inline void glxx::VertexArray::setAttributeBinding(GLuint attrib, GLuint binding
 {
     glVertexArrayAttribBinding(handle, attrib, binding);
 }
+
+
+#endif /* F07D2DDF_2D70_4BFD_A4F5_A62DB7CDB6D7 */

@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef C0F5E2EC_9F1D_4811_96CD_345B1AE0C616
+#define C0F5E2EC_9F1D_4811_96CD_345B1AE0C616
 #include <glad/gl.h>
 
 namespace glxx
@@ -277,3 +279,6 @@ static inline GLenum getPixelFormatGPU(glxx::PixelFormat format)
 }
 } // namespace detail
 } // namespace glxx
+
+
+#endif /* C0F5E2EC_9F1D_4811_96CD_345B1AE0C616 */

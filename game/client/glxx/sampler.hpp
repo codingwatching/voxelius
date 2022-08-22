@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef A288DEB5_6CCC_4335_BF93_FEC6FD2E256F
+#define A288DEB5_6CCC_4335_BF93_FEC6FD2E256F
 #include <game/client/glxx/object.hpp>
 
 namespace glxx
@@ -63,3 +65,6 @@ inline void glxx::Sampler::parameter(GLenum pname, GLfloat value)
 {
     glSamplerParameterf(handle, pname, value);
 }
+
+
+#endif /* A288DEB5_6CCC_4335_BF93_FEC6FD2E256F */

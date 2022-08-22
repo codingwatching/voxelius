@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Wed Jun 29 2022 15:35:40.
  * Author: Kirill GPRB.
  *
@@ -58,7 +58,7 @@ void client::main()
         std::terminate();
     }
 
-    const vfs::vpath_t icon_path = vfs::vpath_t("32x32.png");
+    const std::filesystem::path icon_path = std::filesystem::path("32x32.png");
     if(Image icon_image = Image(icon_path, false); icon_image.valid()) {
         GLFWimage icon = {};
         icon.width = icon_image.getWidth();

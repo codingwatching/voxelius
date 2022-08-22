@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef F6497C57_54A6_48FC_99DF_2ED45F570563
+#define F6497C57_54A6_48FC_99DF_2ED45F570563
 #include <game/client/glxx/object.hpp>
 #include <game/client/glxx/pixel_format.hpp>
 
@@ -52,3 +54,6 @@ inline void glxx::Renderbuffer::storage(int width, int height, PixelFormat forma
 {
     glNamedRenderbufferStorage(handle, glxx::detail::getPixelFormatGPU(format), width, height);
 }
+
+
+#endif /* F6497C57_54A6_48FC_99DF_2ED45F570563 */

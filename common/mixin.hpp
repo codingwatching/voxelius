@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Tue Jun 28 2022 00:50:16.
  * Author: Kirill GPRB.
  *
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef EF523E67_A0A5_4F44_A706_00DDB68D6D99
+#define EF523E67_A0A5_4F44_A706_00DDB68D6D99
 namespace mixin
 {
 class NonCopyable {
@@ -27,3 +28,6 @@ public:
     virtual ~NonMovable() = default;
 };
 } // namespace mixin
+
+
+#endif /* EF523E67_A0A5_4F44_A706_00DDB68D6D99 */

@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef B7F3D211_9B56_4E57_B6AC_A6DC179EB279
+#define B7F3D211_9B56_4E57_B6AC_A6DC179EB279
 #include <game/client/glxx/object.hpp>
 #include <spdlog/spdlog.h>
 
@@ -144,3 +146,6 @@ inline std::size_t glxx::DrawCommand::size() const
 {
     return nv;
 }
+
+
+#endif /* B7F3D211_9B56_4E57_B6AC_A6DC179EB279 */

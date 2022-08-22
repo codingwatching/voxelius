@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Tue Jun 28 2022 01:09:42.
  * Author: Kirill GPRB.
  *
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef B2CED519_F00E_4379_9C34_5B7D7A939029
+#define B2CED519_F00E_4379_9C34_5B7D7A939029
 #include <chrono>
 
 template<typename chronos>
@@ -63,3 +64,6 @@ inline const typename Clock<chronos>::time_point Clock<chronos>::now()
 {
     return chronos::now();
 }
+
+
+#endif /* B2CED519_F00E_4379_9C34_5B7D7A939029 */

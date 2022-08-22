@@ -1,6 +1,6 @@
 ## SPDX-License-Identifier: MPL-2.0
 ## 
-## Copyright (c), 2022, Voxelius Team.
+## Copyright (c), 2022, Voxelius Contributors.
 ## Created: Wed Jun 29 2022 14:47:46.
 ## Author: Kirill GPRB.
 ## 

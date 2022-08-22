@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Fri Jul 01 2022 01:14:59.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef ABC444A6_B841_4AF1_AD86_F7236053ABF8
+#define ABC444A6_B841_4AF1_AD86_F7236053ABF8
 #include <game/shared/types.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -134,3 +135,6 @@ constexpr static inline const glm::dvec3 toChunkWorldPosition(const chunk_pos_t 
     };
 }
 } // namespace convert
+
+
+#endif /* ABC444A6_B841_4AF1_AD86_F7236053ABF8 */

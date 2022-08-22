@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Sat Jul 02 2022 16:00:10.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef AD16D664_EAF4_44DF_BB66_0EDD278C22B5
+#define AD16D664_EAF4_44DF_BB66_0EDD278C22B5
 #include <entt/entity/entity.hpp>
 #include <game/shared/types.hpp>
 #include <memory>
@@ -33,3 +34,6 @@ voxel_t get(const chunk_pos_t &cpos, const local_pos_t &lpos);
 bool set(const voxel_pos_t &vpos, voxel_t voxel, bool force = false);
 bool set(const chunk_pos_t &cpos, const local_pos_t &lpos, voxel_t voxel, bool force = false);
 } // namespace chunks
+
+
+#endif /* AD16D664_EAF4_44DF_BB66_0EDD278C22B5 */

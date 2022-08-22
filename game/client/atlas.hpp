@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Sat Jul 02 2022 21:22:20.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef EFC8BBEF_0C82_41EC_A112_7DE5C1948B96
+#define EFC8BBEF_0C82_41EC_A112_7DE5C1948B96
 #include <common/mixin.hpp>
 #include <common/vfs.hpp>
 #include <game/client/glxx/texture.hpp>
@@ -31,13 +32,16 @@ public:
     void destroy();
     void submit();
 
-    const Entry *emplace(const vfs::vpath_t &path);
-    const Entry *find(const vfs::vpath_t &path) const;
+    const Entry *emplace(const std::filesystem::path &path);
+    const Entry *find(const std::filesystem::path &path) const;
     const glxx::Texture2DArray &get() const;
 
 private:
     int width, height, count;
     GLuint last_index;
     glxx::Texture2DArray texture;
-    std::unordered_map<vfs::vpath_t, Entry> entries;
+    std::unordered_map<std::filesystem::path, Entry> entries;
 };
+
+
+#endif /* EFC8BBEF_0C82_41EC_A112_7DE5C1948B96 */

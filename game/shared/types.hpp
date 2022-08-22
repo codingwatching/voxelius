@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Fri Jul 01 2022 20:26:57.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef F7C83737_2D58_4015_8307_B085B50B7618
+#define F7C83737_2D58_4015_8307_B085B50B7618
 #include <array>
 #include <cstddef>
 #include <functional>
@@ -36,3 +37,6 @@ struct std::hash<chunk_pos_t> final {
         return (cpos.x * 73856093) ^ (cpos.y * 19349663) ^ (cpos.z * 83492791);
     }
 };
+
+
+#endif /* F7C83737_2D58_4015_8307_B085B50B7618 */

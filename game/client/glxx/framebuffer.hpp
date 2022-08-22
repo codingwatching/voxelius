@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef BD1F3414_2439_43B8_AC4E_328F85870738
+#define BD1F3414_2439_43B8_AC4E_328F85870738
 #include <game/client/glxx/renderbuffer.hpp>
 #include <game/client/glxx/texture.hpp>
 #include <common/cxpr.hpp>
@@ -86,3 +88,6 @@ inline void glxx::Framebuffer::unbind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+
+#endif /* BD1F3414_2439_43B8_AC4E_328F85870738 */

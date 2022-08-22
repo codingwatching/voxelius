@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Wed Jun 29 2022 19:21:38.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef E69DB236_81BC_4E98_B5E0_FAE6650B602F
+#define E69DB236_81BC_4E98_B5E0_FAE6650B602F
 #include <game/client/glxx/object.hpp>
 
 namespace glxx
@@ -67,3 +68,6 @@ inline void glxx::Buffer::write(std::size_t offset, std::size_t size, const void
 {
     glNamedBufferSubData(handle, static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 }
+
+
+#endif /* E69DB236_81BC_4E98_B5E0_FAE6650B602F */

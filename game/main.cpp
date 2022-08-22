@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Tue Jun 28 2022 01:16:56.
  * Author: Kirill GPRB.
  *
@@ -15,12 +15,12 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-static inline const vfs::rpath_t getRPathGame()
+static inline const std::filesystem::path getRPathGame()
 {
     std::string gamepath_arg;
     if(cmdline::get("gamepath", gamepath_arg)) {
         // Allow setting game path via cmdline.
-        return vfs::rpath_t(gamepath_arg);
+        return std::filesystem::path(gamepath_arg);
     }
 
     // TODO: if Voxelius ever gets uploaded
@@ -40,7 +40,7 @@ static inline const vfs::rpath_t getRPathGame()
     // We are building the game for a system that
     // has a lot of directories designed specifically
     // to store application's read-only data.
-    return vfs::rpath_t("/usr/share/voxelius");
+    return std::filesystem::path("/usr/share/voxelius");
 #endif
 
     // We are building the game for a system
@@ -50,12 +50,12 @@ static inline const vfs::rpath_t getRPathGame()
     return fs_std::current_path();
 }
 
-static inline const vfs::rpath_t getRPathUser()
+static inline const std::filesystem::path getRPathUser()
 {
     std::string userpath_arg;
     if(cmdline::get("userpath", userpath_arg)) {
         // Allow setting user path via cmdline.
-        return vfs::rpath_t(userpath_arg);
+        return std::filesystem::path(userpath_arg);
     }
 
 #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
@@ -63,7 +63,7 @@ static inline const vfs::rpath_t getRPathUser()
         // We are building the game for an XDG-compliant
         // system. That means the user's home directory
         // can be retreived from XDG_DATA_HOME envar.
-        return vfs::rpath_t(xdg_home) / ".voxelius";
+        return std::filesystem::path(xdg_home) / ".voxelius";
     }
 
     if(const char *unix_home = std::getenv("HOME")) {
@@ -71,7 +71,7 @@ static inline const vfs::rpath_t getRPathUser()
         // at least is POSIX-compliant. That means the
         // user's home directory can be retreived
         // from HOME environment variable.
-        return vfs::rpath_t(unix_home) / ".voxelius";
+        return std::filesystem::path(unix_home) / ".voxelius";
     }
 #endif
 
@@ -79,7 +79,7 @@ static inline const vfs::rpath_t getRPathUser()
         // We are building the game for a system
         // that suspiciously looks like Windows.
         // In that case we can use AppData/Roaming.
-        return vfs::rpath_t(appdata) / "voxelius";
+        return std::filesystem::path(appdata) / "voxelius";
     }
 
     // We are building the game for a system
@@ -131,8 +131,8 @@ int main(int argc, char **argv)
         std::terminate();
     }
 
-    const vfs::rpath_t rpath_game = getRPathGame();
-    const vfs::rpath_t rpath_user = getRPathUser();
+    const std::filesystem::path rpath_game = getRPathGame();
+    const std::filesystem::path rpath_user = getRPathUser();
 
     spdlog::info("vfs: setting game path to {}", rpath_game.native());
     spdlog::info("vfs: setting user path to {}", rpath_user.native());

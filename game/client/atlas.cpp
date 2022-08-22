@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Sat Jul 02 2022 21:33:20.
  * Author: Kirill GPRB.
  * 
@@ -54,7 +54,7 @@ void Atlas::submit()
     // texture.genMipmap();
 }
 
-const Atlas::Entry *Atlas::emplace(const vfs::vpath_t &path)
+const Atlas::Entry *Atlas::emplace(const std::filesystem::path &path)
 {
     if(!texture.valid()) {
         spdlog::warn("atlas: unable to emplace {}: texture array is invalid", path.string());
@@ -74,19 +74,28 @@ const Atlas::Entry *Atlas::emplace(const vfs::vpath_t &path)
     }
 
     if(const Image image = Image(path); image.valid()) {
-        int i_width, i_height;
-        image.getSize(i_width, i_height);
-        if(i_width > width || i_height > height)
-            spdlog::warn("atlas: {} exceeds atlas size [{}x{}, max {}x{}]", path.string(), i_width, i_height, width, height);
-        i_width = cxpr::clamp<int>(i_width, 0, width);
-        i_height = cxpr::clamp<int>(i_height, 0, height);
+        int iw, ih;
+        image.getSize(iw, ih);
+
+        // We allow SMALLER images but not
+        // LARGER images. Having an image that
+        // has dimensions larger than the array
+        // can provide will require me setting up
+        // an environment for downsampling it which
+        // is much harder than just 
+
+        if(iw > width || ih > height) {
+            // I hereby consider this a hate crime.
+            spdlog::error("atlas: {} exceeds atlas size [{}x{}, max {}x{}]", path.string(), iw, ih, width, height);
+            return nullptr;
+        }
 
         Entry entry = {};
         entry.index = last_index++;
-        entry.uv.x = static_cast<double>(i_width) / static_cast<double>(width);
-        entry.uv.y = static_cast<double>(i_height) / static_cast<double>(i_height);
+        entry.uv.x = static_cast<double>(iw) / static_cast<double>(width);
+        entry.uv.y = static_cast<double>(ih) / static_cast<double>(height);
 
-        texture.write(static_cast<int>(entry.index), 0, 0, i_width, i_height, Image::FORMAT, image.data());
+        texture.write(static_cast<int>(entry.index), 0, 0, iw, ih, Image::FORMAT, image.data());
 
         return &(entries[path] = entry);
     }
@@ -95,7 +104,7 @@ const Atlas::Entry *Atlas::emplace(const vfs::vpath_t &path)
     return nullptr;
 }
 
-const Atlas::Entry *Atlas::find(const vfs::vpath_t &path) const
+const Atlas::Entry *Atlas::find(const std::filesystem::path &path) const
 {
     const auto it = entries.find(path);
     if(it != entries.cend())

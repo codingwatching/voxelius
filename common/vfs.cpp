@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Tue Jun 28 2022 14:39:46.
  * Author: Kirill GPRB.
  *
@@ -37,32 +37,32 @@ bool vfs::deinit()
     return !!PHYSFS_deinit();
 }
 
-bool vfs::setWritePath(const vfs::rpath_t &path)
+bool vfs::setWritePath(const std::filesystem::path &path)
 {
     return !!PHYSFS_setWriteDir(path.native().c_str());
 }
 
-bool vfs::createDirectories(const vfs::vpath_t &path)
+bool vfs::createDirectories(const std::filesystem::path &path)
 {
     return !!PHYSFS_mkdir(path.string().c_str());
 }
 
-bool vfs::mount(const vfs::rpath_t &path, const vfs::vpath_t &mountpoint, bool append)
+bool vfs::mount(const std::filesystem::path &path, const std::filesystem::path &mountpoint, bool append)
 {
     return !!PHYSFS_mount(path.native().c_str(), mountpoint.string().c_str(), append ? 1 : 0);
 }
 
-bool vfs::umount(const vfs::rpath_t &path)
+bool vfs::umount(const std::filesystem::path &path)
 {
     return !!PHYSFS_unmount(path.native().c_str());
 }
 
-bool vfs::exists(const vfs::vpath_t &path)
+bool vfs::exists(const std::filesystem::path &path)
 {
     return PHYSFS_exists(path.string().c_str()) ? true : false;
 }
 
-bool vfs::isDirectory(const vfs::vpath_t &path)
+bool vfs::isDirectory(const std::filesystem::path &path)
 {
     PHYSFS_Stat s = {};
     const std::string vstr = path.string();
@@ -71,7 +71,7 @@ bool vfs::isDirectory(const vfs::vpath_t &path)
     return false;
 }
 
-bool vfs::isSymlink(const vfs::vpath_t &path)
+bool vfs::isSymlink(const std::filesystem::path &path)
 {
     PHYSFS_Stat s = {};
     const std::string vstr = path.string();
@@ -80,10 +80,10 @@ bool vfs::isSymlink(const vfs::vpath_t &path)
     return false;
 }
 
-bool vfs::isPathValid(const vfs::vpath_t &path)
+bool vfs::isPathValid(const std::filesystem::path &path)
 {
     if(path.is_absolute() && path.root_path() == vfs::getRootPath()) {
-        std::vector<std::string> bits = strtools::split(path.string(), std::string(vfs::vpath_t::preferred_separator, 1));
+        std::vector<std::string> bits = strtools::split(path.string(), std::string(std::filesystem::path::preferred_separator, 1));
         for(const std::string &bit : bits) {
             if(checkPathBit(bit))
                 continue;
@@ -101,7 +101,7 @@ void vfs::close(vfs::file_t *file)
     PHYSFS_close(file);
 }
 
-vfs::file_t *vfs::open(const vfs::vpath_t &path, vfs::openmode_t mode)
+vfs::file_t *vfs::open(const std::filesystem::path &path, vfs::openmode_t mode)
 {
     const std::string vstr = path.string();
     vfs::file_t *file = nullptr;
@@ -179,14 +179,14 @@ bool vfs::setPosition(vfs::file_t *file, size_t position)
     return !!PHYSFS_seek(file, static_cast<PHYSFS_uint64>(position));
 }
 
-const vfs::rpath_t vfs::getWritePath()
+const std::filesystem::path vfs::getWritePath()
 {
-    return vfs::rpath_t(PHYSFS_getWriteDir());
+    return std::filesystem::path(PHYSFS_getWriteDir());
 }
 
-const vfs::vpath_t vfs::getRootPath()
+const std::filesystem::path vfs::getRootPath()
 {
-    return vfs::vpath_t("/");
+    return std::filesystem::path("/");
 }
 
 const std::string vfs::getError()
@@ -194,7 +194,7 @@ const std::string vfs::getError()
     return PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
 }
 
-bool vfs::readBytes(const vfs::vpath_t &path, std::vector<uint8_t> &out)
+bool vfs::readBytes(const std::filesystem::path &path, std::vector<uint8_t> &out)
 {
     vfs::file_t *file = vfs::open(path, vfs::OPEN_RD);
     if(file) {
@@ -207,7 +207,7 @@ bool vfs::readBytes(const vfs::vpath_t &path, std::vector<uint8_t> &out)
     return false;
 }
 
-bool vfs::readString(const vfs::vpath_t &path, std::string &out)
+bool vfs::readString(const std::filesystem::path &path, std::string &out)
 {
     vfs::file_t *file = vfs::open(path, vfs::OPEN_RD);
     if(file) {
@@ -220,7 +220,7 @@ bool vfs::readString(const vfs::vpath_t &path, std::string &out)
     return false;
 }
 
-bool vfs::writeBytes(const vfs::vpath_t &path, const std::vector<uint8_t> &in)
+bool vfs::writeBytes(const std::filesystem::path &path, const std::vector<uint8_t> &in)
 {
     vfs::file_t *file = vfs::open(path, vfs::OPEN_WR);
     if(file) {
@@ -232,7 +232,7 @@ bool vfs::writeBytes(const vfs::vpath_t &path, const std::vector<uint8_t> &in)
     return false;
 }
 
-bool vfs::writeString(const vfs::vpath_t &path, const std::string &in)
+bool vfs::writeString(const std::filesystem::path &path, const std::string &in)
 {
     vfs::file_t *file = vfs::open(path, vfs::OPEN_WR);
     if(file) {

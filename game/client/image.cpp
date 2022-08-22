@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Fri Jul 01 2022 23:41:09.
  * Author: Kirill GPRB.
  * 
@@ -17,7 +17,7 @@ Image::Image()
 
 }
 
-Image::Image(const vfs::rpath_t &path, bool flip)
+Image::Image(const std::filesystem::path &path, bool flip)
     : width(0), height(0), pixels(nullptr)
 {
     create(path, flip);
@@ -45,7 +45,7 @@ Image &Image::operator=(Image &&rhs)
     return *this;
 }
 
-bool Image::create(const vfs::rpath_t &path, bool flip)
+bool Image::create(const std::filesystem::path &path, bool flip)
 {
     stbi_set_flip_vertically_on_load(flip ? 1 : 0);
 

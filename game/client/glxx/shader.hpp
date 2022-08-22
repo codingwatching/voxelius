@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: MPL-2.0 */
 /*
- * Copyright (c) 2022 Kirill GPRB
+ * Copyright (c), 2022, Voxelius Contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef E29ED32A_C651_432D_BBC4_B9705EC39AB8
+#define E29ED32A_C651_432D_BBC4_B9705EC39AB8
 #include <game/client/glxx/object.hpp>
 #include <string>
 #include <spdlog/spdlog.h>
@@ -155,3 +157,6 @@ inline constexpr GLbitfield glxx::Shader::stageBit() const
 {
     return bit;
 }
+
+
+#endif /* E29ED32A_C651_432D_BBC4_B9705EC39AB8 */

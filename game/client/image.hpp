@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 /* 
- * Copyright (c), 2022, Voxelius Team.
+ * Copyright (c), 2022, Voxelius Contributors.
  * Created: Fri Jul 01 2022 23:38:11.
  * Author: Kirill GPRB.
  * 
@@ -8,7 +8,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
+#ifndef A86E4BD8_41CF_4E53_A6E9_2D5BEF32E3A6
+#define A86E4BD8_41CF_4E53_A6E9_2D5BEF32E3A6
 #include <common/mixin.hpp>
 #include <common/vfs.hpp>
 #include <game/client/glxx/pixel_format.hpp>
@@ -19,13 +20,13 @@ public:
 
 public:
     Image();
-    Image(const vfs::vpath_t &path, bool flip = true);
+    Image(const std::filesystem::path &path, bool flip = true);
     Image(Image &&rhs);
     virtual ~Image();
     
     Image &operator=(Image &&rhs);
 
-    bool create(const vfs::vpath_t &path, bool flip = true);
+    bool create(const std::filesystem::path &path, bool flip = true);
     void destroy();
     bool valid() const;
 
@@ -40,3 +41,6 @@ private:
     int width, height;
     void *pixels;
 };
+
+
+#endif /* A86E4BD8_41CF_4E53_A6E9_2D5BEF32E3A6 */
